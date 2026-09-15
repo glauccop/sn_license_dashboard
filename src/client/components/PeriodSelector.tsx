@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
+import type { Strings } from '../i18n'
 
 interface Props {
     windows: number[]
     activeWindow: number | null
     onSelectWindow: (days: number) => void
     onSelectRange: (from: string, to: string) => void
+    t: Strings
 }
 
-const WINDOW_LABELS: Record<number, string> = {
-    365: '1 year',
-}
-
-export default function PeriodSelector({ windows, activeWindow, onSelectWindow, onSelectRange }: Props) {
+export default function PeriodSelector({ windows, activeWindow, onSelectWindow, onSelectRange, t }: Props) {
     const [custom, setCustom] = useState(false)
     const [from, setFrom] = useState('')
     const [to, setTo] = useState('')
+
+    const windowLabels: Record<number, string> = { 365: t.periodOneYear }
 
     function applyRange() {
         if (from && to) {
@@ -24,7 +24,7 @@ export default function PeriodSelector({ windows, activeWindow, onSelectWindow, 
 
     return (
         <div className="period-selector">
-            <span className="period-label">Period</span>
+            <span className="period-label">{t.period}</span>
 
             {windows.map((days) => (
                 <button
@@ -36,7 +36,7 @@ export default function PeriodSelector({ windows, activeWindow, onSelectWindow, 
                         onSelectWindow(days)
                     }}
                 >
-                    {WINDOW_LABELS[days] ?? days + 'd'}
+                    {windowLabels[days] ?? days + 'd'}
                 </button>
             ))}
 
@@ -45,16 +45,16 @@ export default function PeriodSelector({ windows, activeWindow, onSelectWindow, 
                 className={'period-button' + (custom ? ' is-active' : '')}
                 onClick={() => setCustom(!custom)}
             >
-                Custom
+                {t.periodCustom}
             </button>
 
             {custom ? (
                 <span className="period-range">
-                    <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} aria-label="From" />
-                    <span className="period-range-sep">to</span>
-                    <input type="date" value={to} onChange={(e) => setTo(e.target.value)} aria-label="To" />
+                    <input type="date" value={from} onChange={(e) => setFrom(e.target.value)} aria-label={t.periodFrom} />
+                    <span className="period-range-sep">{t.periodTo}</span>
+                    <input type="date" value={to} onChange={(e) => setTo(e.target.value)} aria-label={t.periodTo} />
                     <button type="button" className="period-apply" disabled={!from || !to} onClick={applyRange}>
-                        Apply
+                        {t.periodApply}
                     </button>
                 </span>
             ) : null}

@@ -8,6 +8,7 @@ import SuiteDetail from './components/SuiteDetail'
 import TrendChart from './components/TrendChart'
 import { fetchMeta, fetchSuites, fetchTrend, setSuiteVisibility } from './services/api'
 import type { Meta, Suite, Trend } from './types'
+import { stringsFor } from './i18n'
 
 const DEFAULT_WINDOWS = [7, 14, 30, 60, 90, 180, 240, 365]
 
@@ -53,6 +54,7 @@ export default function App() {
           } as React.CSSProperties)
         : undefined
 
+    const t = stringsFor(meta?.language)
     const activeSuite = suites.find((s) => s.code === selected)
     const visibleSuites = suites.filter((s) => s.dashboard_visible)
 
@@ -67,7 +69,7 @@ export default function App() {
 
     return (
         <div className="app" style={style}>
-            <AppHeader meta={meta} />
+            <AppHeader meta={meta} t={t} />
 
             {error ? <div className="app-error">{error}</div> : null}
             {loading ? <div className="app-loading">Loading allocation data…</div> : null}
@@ -75,10 +77,10 @@ export default function App() {
             {!loading && suites.length > 0 ? (
                 <>
                     <div className="suite-toolbar">
-                        <SuiteSettings suites={suites} onToggle={handleToggleVisibility} />
+                        <SuiteSettings suites={suites} onToggle={handleToggleVisibility} t={t} />
                     </div>
 
-                    <SuiteGrid suites={visibleSuites} selected={selected} onSelect={setSelected} />
+                    <SuiteGrid suites={visibleSuites} selected={selected} onSelect={setSelected} t={t} />
 
                     <PeriodSelector
                         windows={meta?.windows ?? DEFAULT_WINDOWS}
@@ -91,10 +93,11 @@ export default function App() {
                             setWindow(null)
                             setRange({ from, to })
                         }}
+                        t={t}
                     />
 
-                    {trend ? <TrendChart trend={trend} /> : null}
-                    {activeSuite ? <SuiteDetail suite={activeSuite} /> : null}
+                    {trend ? <TrendChart trend={trend} t={t} /> : null}
+                    {activeSuite ? <SuiteDetail suite={activeSuite} t={t} /> : null}
                 </>
             ) : null}
         </div>

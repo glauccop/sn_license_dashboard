@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import type { Meta } from '../types'
+import type { Strings } from '../i18n'
 
 interface Props {
     meta: Meta | null
+    t: Strings
 }
 
-export default function AppHeader({ meta }: Props) {
+export default function AppHeader({ meta, t }: Props) {
     const [showFull, setShowFull] = useState(false)
 
     return (
@@ -15,11 +17,9 @@ export default function AppHeader({ meta }: Props) {
                     <img className="app-logo" src={meta.theme.logo_url} alt={meta.theme.product_name} />
                 ) : null}
                 <div>
-                    <h1>License Allocation Dashboard</h1>
+                    <h1>{t.appTitle}</h1>
                     <p className="app-subtitle">
-                        {meta?.last_collected
-                            ? 'Last collection ' + meta.last_collected
-                            : 'No collection has run yet'}
+                        {meta?.last_collected ? t.lastCollection(meta.last_collected) : t.noCollectionYet}
                     </p>
                 </div>
             </div>
@@ -31,8 +31,8 @@ export default function AppHeader({ meta }: Props) {
                 onClick={() => setShowFull(!showFull)}
             >
                 <span className="disclaimer-dot" aria-hidden="true" />
-                {meta?.disclaimer_short ?? 'Informational tracking reference.'}
-                <span className="disclaimer-more">{showFull ? 'Hide' : 'Details'}</span>
+                {meta?.disclaimer_short ?? t.disclaimerFallback}
+                <span className="disclaimer-more">{showFull ? t.disclaimerHide : t.disclaimerDetails}</span>
             </button>
 
             {showFull && meta ? <p className="disclaimer-full">{meta.disclaimer_full}</p> : null}

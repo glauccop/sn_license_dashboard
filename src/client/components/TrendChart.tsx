@@ -1,25 +1,22 @@
 import React, { useState } from 'react'
 import type { Trend } from '../types'
-import { UNIT_LABELS } from '../types'
+import type { Strings } from '../i18n'
 
 interface Props {
     trend: Trend
+    t: Strings
 }
 
 const WIDTH = 900
 const HEIGHT = 260
 const PAD = { top: 16, right: 16, bottom: 28, left: 56 }
 
-export default function TrendChart({ trend }: Props) {
+export default function TrendChart({ trend, t }: Props) {
     const [hover, setHover] = useState<number | null>(null)
 
     const points = trend.points
     if (points.length === 0) {
-        return (
-            <div className="chart-empty">
-                No collections in this period yet. The dashboard fills in as the daily job runs.
-            </div>
-        )
+        return <div className="chart-empty">{t.chartEmpty}</div>
     }
 
     const plotWidth = WIDTH - PAD.left - PAD.right
@@ -45,7 +42,7 @@ export default function TrendChart({ trend }: Props) {
         <div className="chart">
             <div className="chart-head">
                 <h3>{trend.name}</h3>
-                <span className="chart-unit">{UNIT_LABELS[trend.unit] ?? trend.unit}</span>
+                <span className="chart-unit">{t.units[trend.unit] ?? trend.unit}</span>
             </div>
 
             <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="chart-svg" role="img">
@@ -68,7 +65,7 @@ export default function TrendChart({ trend }: Props) {
                             y2={y(contract)}
                         />
                         <text className="chart-contract-label" x={WIDTH - PAD.right} y={y(contract) - 6} textAnchor="end">
-                            Entitled {contract.toLocaleString()}
+                            {t.chartEntitled} {contract.toLocaleString()}
                         </text>
                     </g>
                 ) : null}
@@ -107,19 +104,17 @@ export default function TrendChart({ trend }: Props) {
                 {active ? (
                     <>
                         <strong>{active.date}</strong>
-                        <span>{active.value.toLocaleString()} {UNIT_LABELS[trend.unit] ?? trend.unit}</span>
+                        <span>
+                            {active.value.toLocaleString()} {t.units[trend.unit] ?? trend.unit}
+                        </span>
                         {active.allocated > 0 ? (
                             <span>
-                                {active.allocated.toLocaleString()} allocated · {active.active_365.toLocaleString()} with
-                                a login in 365 days
+                                {t.chartAllocatedNote(active.allocated.toLocaleString(), active.active_365.toLocaleString())}
                             </span>
                         ) : null}
                     </>
                 ) : (
-                    <span className="is-muted">
-                        {points.length} daily collection{points.length === 1 ? '' : 's'} between {trend.from} and{' '}
-                        {trend.to}
-                    </span>
+                    <span className="is-muted">{t.chartReadoutRange(points.length, trend.from, trend.to)}</span>
                 )}
             </div>
         </div>

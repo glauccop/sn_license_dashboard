@@ -157,6 +157,11 @@ declare global {
                         table: 'sys_module'
                         id: '46156092f97948138b9a74bb23784a6f'
                     }
+                    'property-pb-dictionary-seeded': {
+                        table: 'sys_properties'
+                        id: 'bfda9f828b3544cab6466eb26fd71151'
+                        deleted: true
+                    }
                     'property-theme-accent': {
                         table: 'sys_properties'
                         id: 'dfdaa90172084d268b25da6283ebb8d0'
@@ -309,6 +314,11 @@ declare global {
                         table: 'sys_script_include'
                         id: 'c2825060e41c472aad43a19359e93296'
                     }
+                    'si-pt-br-dictionary-seed': {
+                        table: 'sys_script_include'
+                        id: 'e612845613054bb1bbd8f2632074b182'
+                        deleted: true
+                    }
                     'source-ham': {
                         table: 'x_snc_lic_alloc_source'
                         id: 'c601fb575a524242879145b65a00fede'
@@ -341,6 +351,11 @@ declare global {
                     src_server_LicenseUsageCollector_server_js: {
                         table: 'sys_module'
                         id: '24dca522b15f4cdcb37b22b456a22dae'
+                    }
+                    src_server_PtBrDictionarySeed_server_js: {
+                        table: 'sys_module'
+                        id: '03c497a0188c44c384b31ce8c99c5315'
+                        deleted: true
                     }
                     'suite-app-engine': {
                         table: 'x_snc_lic_alloc_suite'
@@ -382,6 +397,331 @@ declare global {
                         table: 'x_snc_lic_alloc_suite'
                         id: '433dfda9a1174955a0c557b61ce356ca'
                     }
+                    'tt-menu-license-allocation-title': {
+                        table: 'sys_translated_text'
+                        id: '4f1d475060fa4c77a9614e0a50f939c9'
+                        deleted: true
+                    }
+                    'tt-module-dashboard-title': {
+                        table: 'sys_translated_text'
+                        id: '01a9c80e41c1402bb0ea17909f18a9f8'
+                        deleted: true
+                    }
+                    'tt-module-entitlements-title': {
+                        table: 'sys_translated_text'
+                        id: 'e74a5b49ab934fd684c588ca4be46555'
+                        deleted: true
+                    }
+                    'tt-module-role-map-title': {
+                        table: 'sys_translated_text'
+                        id: 'a47745022ff746e58b999aa8c80b47fd'
+                        deleted: true
+                    }
+                    'tt-module-snapshots-title': {
+                        table: 'sys_translated_text'
+                        id: 'c57c57b378ad4c69a6d8591abf936462'
+                        deleted: true
+                    }
+                    'tt-module-sources-title': {
+                        table: 'sys_translated_text'
+                        id: '5176f377fb4a458bb3f349505e238dfb'
+                        deleted: true
+                    }
+                    'tt-module-suites-title': {
+                        table: 'sys_translated_text'
+                        id: '99ba5599fc394c2781c4918ffe50421c'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-change-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'e7eeeeccb4344562a8b87621f381b1b6'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-incident-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '70bd04120ae1413aa50e24bdea845631'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-itil-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'b510bbad0e674e2893ba433d41e59595'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-major-incident-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '8b5a501991e842e194d323781a5204e2'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-problem-coordinator-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'fd61ff400505492a96f91b72ecb8eb2d'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-problem-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'a8e0d2dcf0ad4622a33196c832d717f3'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-problem-task-analyst-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'e62d4d8c394644688fa741ced873c38b'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-change-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'eb4f8e72de98406fb0a828918b22370f'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-change-write-app-label': {
+                        table: 'sys_translated_text'
+                        id: '9786cad8b3274f97b26bb0058ad720e5'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-incident-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'e9dabda1516a447f835552ccbd14579a'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-incident-write-app-label': {
+                        table: 'sys_translated_text'
+                        id: '660b4b0321d449e797397237e6e03910'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-problem-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: '57bd93a3c89442eeb0bc31d24b767a6a'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-problem-write-app-label': {
+                        table: 'sys_translated_text'
+                        id: '505a6e7ea8204de99c70608028e278a3'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-request-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: '5ea16cdb5fc6489fba7af3c3e70c0c4e'
+                        deleted: true
+                    }
+                    'tt-rm-itsm-sn-request-write-app-label': {
+                        table: 'sys_translated_text'
+                        id: '5fc04d3c9c2b4fb2877d2770b91e8013'
+                        deleted: true
+                    }
+                    'tt-rm-sir-admin-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'bb1478eee3ed42ffa4a539481778e0d4'
+                        deleted: true
+                    }
+                    'tt-rm-sir-analyst-app-label': {
+                        table: 'sys_translated_text'
+                        id: '7b7ed7c3770e43f9acaa5e328ab04b73'
+                        deleted: true
+                    }
+                    'tt-rm-sir-basic-app-label': {
+                        table: 'sys_translated_text'
+                        id: '633a90fc012f4db5be1279cd4df4f50d'
+                        deleted: true
+                    }
+                    'tt-rm-sir-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '4a2ea0e131fb471fa42f7495603d868c'
+                        deleted: true
+                    }
+                    'tt-rm-sir-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: '930778d884cf4d059d809d0a185aa89f'
+                        deleted: true
+                    }
+                    'tt-rm-spm-demand-approver-app-label': {
+                        table: 'sys_translated_text'
+                        id: '10e5415c53514d41b2d9567cc33d7cbe'
+                        deleted: true
+                    }
+                    'tt-rm-spm-demand-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '928ee594447e4680af8b173045731215'
+                        deleted: true
+                    }
+                    'tt-rm-spm-demand-user-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'b02dae16e2b5405b9efd5c58ef16a572'
+                        deleted: true
+                    }
+                    'tt-rm-spm-itfm-planner-app-label': {
+                        table: 'sys_translated_text'
+                        id: '9ebd6f80195a4b0a9d83106280729310'
+                        deleted: true
+                    }
+                    'tt-rm-spm-portfolio-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '45b6fb5fa6b142cfb95cc90611d5aa78'
+                        deleted: true
+                    }
+                    'tt-rm-spm-pps-admin-app-label': {
+                        table: 'sys_translated_text'
+                        id: '4cdcc565e63441da934cf2b758596550'
+                        deleted: true
+                    }
+                    'tt-rm-spm-program-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '975a40d70f7344d4bd4cebe449841a6f'
+                        deleted: true
+                    }
+                    'tt-rm-spm-project-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'd386cb09b589491fa259de5ebbcc6918'
+                        deleted: true
+                    }
+                    'tt-rm-spm-project-portfolio-user-app-label': {
+                        table: 'sys_translated_text'
+                        id: '90fae701bf274512a9b3008c1b7cd17d'
+                        deleted: true
+                    }
+                    'tt-rm-spm-project-user-app-label': {
+                        table: 'sys_translated_text'
+                        id: '24e496747808418db7e7c3539b4bb985'
+                        deleted: true
+                    }
+                    'tt-rm-spm-rate-model-admin-app-label': {
+                        table: 'sys_translated_text'
+                        id: 'bb89524497124d5cad8bc3df0315bb13'
+                        deleted: true
+                    }
+                    'tt-rm-spm-rate-model-user-app-label': {
+                        table: 'sys_translated_text'
+                        id: '482f9a1770084bdeaa494b4cfc634be4'
+                        deleted: true
+                    }
+                    'tt-rm-spm-resource-manager-app-label': {
+                        table: 'sys_translated_text'
+                        id: '04ddd541d09f437096036cd4f5c3691f'
+                        deleted: true
+                    }
+                    'tt-rm-spm-resource-user-app-label': {
+                        table: 'sys_translated_text'
+                        id: '3e38b45f4bac4ca8af7c42ba3583aa4a'
+                        deleted: true
+                    }
+                    'tt-rm-spm-sn-ppm-read-app-label': {
+                        table: 'sys_translated_text'
+                        id: '8cdc08d6cbc5496cb902e705709d88de'
+                        deleted: true
+                    }
+                    'tt-source-ham-label': {
+                        table: 'sys_translated_text'
+                        id: '33da1cc4e5d54d5e833ab34b270ad30c'
+                        deleted: true
+                    }
+                    'tt-source-itom-visibility-label': {
+                        table: 'sys_translated_text'
+                        id: 'dd44fe54701b4b9f8c20f4f1d41f24f1'
+                        deleted: true
+                    }
+                    'tt-source-rpa-label': {
+                        table: 'sys_translated_text'
+                        id: 'f9e8a7f324d5474188331ca5559c1028'
+                        deleted: true
+                    }
+                    'tt-source-sam-label': {
+                        table: 'sys_translated_text'
+                        id: '3401bf14462e491eb772a2d4e8878514'
+                        deleted: true
+                    }
+                    'tt-source-vr-label': {
+                        table: 'sys_translated_text'
+                        id: '32e189ca3e3d4b1b8feca24bfd488c6f'
+                        deleted: true
+                    }
+                    'tt-suite-app-engine-methodology': {
+                        table: 'sys_translated_text'
+                        id: '05e72a337e854d338ac758cb624d129e'
+                        deleted: true
+                    }
+                    'tt-suite-ham-methodology': {
+                        table: 'sys_translated_text'
+                        id: 'bb44345fe3904fbbbb884f2b1a2f05c0'
+                        deleted: true
+                    }
+                    'tt-suite-ham-name': {
+                        table: 'sys_translated_text'
+                        id: 'ef49c9ea225c4a00a7eb70dd1188cc31'
+                        deleted: true
+                    }
+                    'tt-suite-itom-visibility-methodology': {
+                        table: 'sys_translated_text'
+                        id: '93d565857ecc47c7aa80de9598d6bdf1'
+                        deleted: true
+                    }
+                    'tt-suite-itsm-methodology': {
+                        table: 'sys_translated_text'
+                        id: '36681ca5d6d54de5b9114b7a835c780e'
+                        deleted: true
+                    }
+                    'tt-suite-itsm-name': {
+                        table: 'sys_translated_text'
+                        id: '7d847b871cd84a29afcb7df4bcc1399e'
+                        deleted: true
+                    }
+                    'tt-suite-rpa-methodology': {
+                        table: 'sys_translated_text'
+                        id: '58dce6413e3a48a695714703979286ea'
+                        deleted: true
+                    }
+                    'tt-suite-rpa-name': {
+                        table: 'sys_translated_text'
+                        id: '6a4161ab3c514705860c0bf06a4e0a74'
+                        deleted: true
+                    }
+                    'tt-suite-sam-methodology': {
+                        table: 'sys_translated_text'
+                        id: '0e92a1590af5419899c5db1ab30d58ab'
+                        deleted: true
+                    }
+                    'tt-suite-sam-name': {
+                        table: 'sys_translated_text'
+                        id: 'bcd1659610ae41ffaf04c9ea33288e22'
+                        deleted: true
+                    }
+                    'tt-suite-sir-methodology': {
+                        table: 'sys_translated_text'
+                        id: '11cbf0e4c27b43219363e1be0c4e43ba'
+                        deleted: true
+                    }
+                    'tt-suite-sir-name': {
+                        table: 'sys_translated_text'
+                        id: 'ccff7cda22c04870a06bc460ab0210e5'
+                        deleted: true
+                    }
+                    'tt-suite-spm-methodology': {
+                        table: 'sys_translated_text'
+                        id: 'e187c4f337824abb945a49537ca76f89'
+                        deleted: true
+                    }
+                    'tt-suite-spm-name': {
+                        table: 'sys_translated_text'
+                        id: '5dd231e85885438aa61c0784b3e846db'
+                        deleted: true
+                    }
+                    'tt-suite-unrestricted-methodology': {
+                        table: 'sys_translated_text'
+                        id: 'fb70b2b9e5ea46c087e7e8cda1349097'
+                        deleted: true
+                    }
+                    'tt-suite-unrestricted-name': {
+                        table: 'sys_translated_text'
+                        id: 'f01baa7a94e5496e824a4b7a5372ecc2'
+                        deleted: true
+                    }
+                    'tt-suite-vr-methodology': {
+                        table: 'sys_translated_text'
+                        id: '7bab92ba466b42b189ceeeb02bd8f4d9'
+                        deleted: true
+                    }
+                    'tt-suite-vr-name': {
+                        table: 'sys_translated_text'
+                        id: 'fb133e0ea361437e9668e5fc9906f9d4'
+                        deleted: true
+                    }
                 }
                 composite: [
                     {
@@ -402,6 +742,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '011a111a8b9c45eabda213a9aa22da2d'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'source'
+                            value: 'default'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '044e36ef263d4a7db7267fb9ab1722b5'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'counting_method'
+                            value: 'not_measurable'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '046821741d0e46fdbc572329a3a995f9'
                         key: {
@@ -411,11 +773,31 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '04f58293c25b4bd088130038dd5db0f4'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'active_365_count'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '075f2354fdfd43b8bf8dcb5eb7a16b29'
                         key: {
                             name: 'x_snc_lic_alloc_snapshot'
                             element: 'suite'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '09064d84275b4aee8408e13e67737260'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            value: 'table_missing'
+                            language: 'pb'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -433,6 +815,51 @@ declare global {
                             name: 'x_snc_lic_alloc_source'
                             element: 'source_table'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0b9a9e43a7bf4bd9ae2fcf5c5d69ba54'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'methodology'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0c031384d1ec42d89f3ef0b1c2b36dfc'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'extra_filter'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0c9b7d6f6bde43d9933e7e6fd3577d02'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'prod_code'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0d280d3535da4ad2b55d91fe394756ea'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'date_field'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0d9890ab0c2f4ae89a658dab3cd00dc7'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'is_detail'
+                            language: 'pb'
                         }
                     },
                     {
@@ -478,6 +905,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '139ab802b16743038f063409cf661625'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'NULL'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '13b9d90764534bc18288c2c8f3094022'
                         key: {
@@ -486,6 +922,15 @@ declare global {
                             value: 'table_missing'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '1755be8951de425499eddef130c186f7'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'NULL'
+                            language: 'pb'
                         }
                     },
                     {
@@ -530,6 +975,15 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '1a6fe608f39f49fc8462035bdd93b671'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'source'
+                            language: 'pb'
                         }
                     },
                     {
@@ -585,6 +1039,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '21b6e312fe574cbc91129fb42625451f'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'allocated_count'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '21fe77841d80499c8e6f326dfb64d5d8'
                         key: {
@@ -593,6 +1056,15 @@ declare global {
                             value: 'unattended_robot'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '2285e2fb7bf84843ac9b60de58a5e133'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'code'
+                            language: 'pb'
                         }
                     },
                     {
@@ -654,11 +1126,47 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '2595c2fd44c84ef2938a88c7675db338'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'active'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '2617c613a6ab49978b96620952bc0a23'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'unit'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '26be5f2d775a4d03bb85dc32805a6eaa'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'status_field'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '27e7f7b99ad040019d341120f785aaff'
                         key: {
                             name: 'x_snc_lic_alloc_source'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '28adf8823b3041dc9782f9e0bfc33234'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'role_type'
+                            language: 'pb'
                         }
                     },
                     {
@@ -672,6 +1180,15 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '29e79ec0f2074fadb71c823b9ef2bac9'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'sku_unit'
+                            language: 'pb'
                         }
                     },
                     {
@@ -713,6 +1230,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '2c187d1db01a4ed6abdb79961b6365eb'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'value_basis'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '2c815c9d07b3413faa9ffc223b030420'
                         key: {
                             name: 'x_snc_lic_alloc_suite'
@@ -727,6 +1253,15 @@ declare global {
                             name: 'x_snc_lic_alloc_suite'
                             element: 'name'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '2d38daadac6a4412ba583892677cb2e1'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'su_count'
+                            language: 'pb'
                         }
                     },
                     {
@@ -808,6 +1343,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '34b417efba65464188c630cc1006f969'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'application_label'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '37f17d8ea8c545af8f4ad7c8eda386fd'
                         key: {
@@ -830,6 +1374,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '391328b024184a72a31d4e8e541f0a94'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'name'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '39b07ea22d1b4001b32cef7924cee69a'
                         key: {
@@ -838,6 +1391,15 @@ declare global {
                             value: 'device'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '39bcf2597d844096b6efff12b86330a9'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'product_name'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1033,6 +1595,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '5a48a0d60ddd4083b27b054741bd8436'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'su_ratio'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '5b09e82c614c4d0986c9d13c053128c8'
                         key: {
                             name: 'x_snc_lic_alloc_role_map'
@@ -1183,6 +1754,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '70499802c9364246a108437883d3d610'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'product_field'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: '72c0452792a24865ab60ff86d1c5fba5'
                         key: {
@@ -1231,6 +1811,15 @@ declare global {
                             value: 'fulfiller_user'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '7719c5144c8d420ba5542ee97fe7fc65'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'category'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1294,6 +1883,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '7dfcbcb7efc34a7abb9acfedddcea3d0'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'suite'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact'
                         id: '815bfbb04baf4957a62895c9764eb753'
                         deleted: true
@@ -1329,6 +1927,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '84e2f08463fe42ae9f3c9c4fa5d76754'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'display_order'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '86bded03afe043feb5d2eee4268c5d6d'
                         deleted: true
@@ -1360,6 +1967,15 @@ declare global {
                             name: 'x_snc_lic_alloc_snapshot'
                             element: 'entitled'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '8ab483a813e6492e870d7d51f4147432'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1453,6 +2069,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '954919ecfd884d3fac2476d6b5dbc4fb'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            value: 'not_measurable'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: '955ac329b73348c79ef136a2dc1e0611'
                         key: {
@@ -1466,11 +2093,53 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '96ef6a3466d7414aaf487c2187c26f67'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'counting_method'
+                            value: 'unrestricted'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '97cdf850ddd042078b348a3d04204a69'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'counting_method'
+                            value: 'role_based'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '97ecc1cd06cf44a68299d02ab2b28400'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'label'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '98b7a04ff373405aa5ea7c7039f5bd07'
                         key: {
                             name: 'x_snc_lic_alloc_source'
                             element: 'su_field'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '9921fc3ca68944c7bdb8a757341fd01e'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'counting_method'
+                            value: 'native_counts'
+                            language: 'pb'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1517,6 +2186,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '9ae88fbcbd0644e1b55543402ea6089f'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'active'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '9eb152c2bde94fb8ba92bd5020f53785'
                         key: {
                             name: 'x_snc_lic_alloc_role_map'
@@ -1530,6 +2208,15 @@ declare global {
                         key: {
                             name: 'x_snc_lic_alloc_role_map'
                             element: 'role'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '9f9461ab754e409aaaf8b9c71aaab65b'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'contract_quantity'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1585,6 +2272,42 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'a66641ce8781448bbde254bc561e681d'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'role'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a69e6ddeff794997b21b3850d0bde790'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'collection_enabled'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a7a521dd59f74655a64b46be08496458'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'active'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a7d72b6d315f4b0087835bc819ff5a60'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'NULL'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: 'a7e1a738fbb94c91b066257949d38fe4'
                         key: {
@@ -1602,6 +2325,17 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: 'a8fcdc52050a488c939906cba121c657'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'value_basis'
+                            value: 'resource_count'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: 'a93da68c5c0249c58bfebc65f9275b93'
                         key: {
                             name: 'x_snc_lic_alloc_suite'
@@ -1609,6 +2343,15 @@ declare global {
                             value: 'unrestricted'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'aa4a1649522849a598c1167e15f01b65'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'category_field'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1653,6 +2396,24 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'aeb954485ec942ad8e225ede187111c4'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'product_value'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'afb6f5b74c7147828dc62386c56c0d07'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'entitled_field'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'b1796573b76245a6a30838c687cb3a07'
                         key: {
                             name: 'x_snc_lic_alloc_suite'
@@ -1669,6 +2430,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'b2b9dfe4bb8343c9b7142243dde1c4ae'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'application_label'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_ui_page'
                         id: 'b2c3c1676e3e4f67a16fd3493dacecda'
                         key: {
@@ -1681,6 +2451,15 @@ declare global {
                         key: {
                             name: 'x_snc_lic_alloc_suite'
                             element: 'name'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'b38699dd13f64b8e9babcf8fc7789be1'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'su_field'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1713,6 +2492,15 @@ declare global {
                         key: {
                             name: 'x_snc_lic_alloc_suite'
                             element: 'methodology'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'b3f2a22fe03146bdbc29232fce5920f2'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'suite'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1767,6 +2555,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'bf05cbe319724ff2bad80a6e18e4ba4e'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            value: 'ok'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'bf6de06623984aef89343c723f744bd9'
                         key: {
@@ -1812,11 +2611,38 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'c000ec79728a4c3bb6840129d7c0bc20'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'counting_method'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: 'c0ebdb53ea464f55b18f39ecbb763754'
                         key: {
                             name: 'x_snc_lic_alloc_role_map'
                             element: 'source'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'c264179764864a4c93b454788f0cef5f'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'resource_count'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'c3968749443d4d8b8a3456358db25c47'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'NULL'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1884,6 +2710,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'c8bf6f95425d441e9666223a553d5cf3'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'source_job_status'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'c8fc5028c89c4064927fd22924a01b40'
                         key: {
                             name: 'x_snc_lic_alloc_source'
@@ -1925,6 +2760,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'd02da796bc4a414fa271df3afe2b59a1'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'entitled'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'd0a2d847aec34fc2b829d979f898484b'
                         key: {
@@ -1935,6 +2779,42 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'd0d430e1d4a94d65a2e0e93fb0f7816d'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'source_table'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'd16dd577671447e689337c195a14f72c'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'source_instance'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'd17e9a0418b74e00be921782274eea25'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'snapshot_date'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'd2049a81f2f044f2a35e554f96dfe3f5'
+                        key: {
+                            name: 'x_snc_lic_alloc_entitlement'
+                            element: 'suite'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1955,11 +2835,31 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'd5e6474c921b4410a16db52bdf91cb81'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'value_basis'
+                            value: 'subscription_units'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'd7d0bcfa2fb74db1b6c0ed8f059c36ec'
                         key: {
                             name: 'x_snc_lic_alloc_source'
                             element: 'active'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'da4cfb17b2a440e38a15219a277f58bc'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'role_type'
+                            language: 'pb'
                         }
                     },
                     {
@@ -1984,6 +2884,24 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'da9ab1bba9e34b4f83a2e39f04f83ae4'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'dashboard_visible'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'db6de7ba9e0c429ba1f8c7702a888860'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'active'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'db73968cec024536a053205b4b24234d'
                         key: {
@@ -1992,6 +2910,24 @@ declare global {
                             value: 'subscription_units'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'dc2a61d384b841d9a654fb69b0e22d48'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'suite'
+                            language: 'pb'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ddaf87848b8441ed87c36b2be15465ed'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'count_field'
+                            language: 'pb'
                         }
                     },
                     {
@@ -2010,6 +2946,17 @@ declare global {
                             name: 'x_snc_lic_alloc_snapshot'
                             element: 'NULL'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'e11de8990f0947008a8833953a45c05f'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'source'
+                            value: 'manual'
+                            language: 'pb'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2096,6 +3043,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'f447ebe673164da4ba9b68c8d576999f'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            value: 'no_data'
+                            language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'f468c3f1c6024b18bea1395ca9e5dc5e'
                         key: {
@@ -2104,11 +3062,29 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'f4d1b9d2f70c44289dc6466dd733af26'
+                        key: {
+                            name: 'x_snc_lic_alloc_source'
+                            element: 'ratio_field'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: 'f524b3454a7d4597971d0db3fcf592b7'
                         key: {
                             application_file: 'e8bfe5b5b86741a885d778d5a1f27d2e'
                             source_artifact: '130f8dd9f90f4210bbc130ab9dd7a016'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'f589351c3796494abce17f08849a6310'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'error_message'
+                            language: 'pb'
                         }
                     },
                     {
@@ -2136,6 +3112,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'f8ec1a62725040b78b25013159e56456'
+                        key: {
+                            name: 'x_snc_lic_alloc_role_map'
+                            element: 'NULL'
+                            language: 'pb'
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: 'f9596b5d5112454fbf2ce9e899f0e28c'
                         key: {
@@ -2149,6 +3134,17 @@ declare global {
                             name: 'x_snc_lic_alloc_source'
                             element: 'category_field'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'fd122e005c2f4c05805c2d551dc46c5b'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'data_status'
+                            value: 'error'
+                            language: 'pb'
+                            dependent_value: 'NULL'
                         }
                     },
                     {

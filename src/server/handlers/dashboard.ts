@@ -3,16 +3,112 @@ import { GlideRecord, GlideAggregate, GlideDateTime, gs } from '@servicenow/glid
 const SUITE = 'x_snc_lic_alloc_suite'
 const ENTITLEMENT = 'x_snc_lic_alloc_entitlement'
 const SNAPSHOT = 'x_snc_lic_alloc_snapshot'
+const ROLE_MAP = 'x_snc_lic_alloc_role_map'
 
-const DISCLAIMER_SHORT =
+const DISCLAIMER_SHORT_EN =
     'Collected daily on this instance · informational tracking reference, not ServiceNow official license measurement.'
 
-const DISCLAIMER_FULL =
+const DISCLAIMER_FULL_EN =
     'The data in this dashboard is collected daily on this instance and represents the license allocation observed on ' +
     'each collection date. Official consumption measurement is performed by ServiceNow through its own metering ' +
     'mechanisms, which may apply different criteria, measurement windows, and counting rules than those used here. ' +
     'These figures are therefore informational and intended for historical tracking, and do not replace ' +
     'the official ServiceNow consumption report.'
+
+const DISCLAIMER_SHORT_PB =
+    'Coletado diariamente nesta instância · referência informativa de acompanhamento, não é a medição oficial de licenças da ServiceNow.'
+
+const DISCLAIMER_FULL_PB =
+    'Os dados deste painel são coletados diariamente nesta instância e representam a alocação de licenças observada em ' +
+    'cada data de coleta. A medição oficial de consumo é feita pela própria ServiceNow, por seus próprios mecanismos de ' +
+    'apuração, que podem aplicar critérios, janelas de medição e regras de contagem diferentes das usadas aqui. ' +
+    'Estes números são, portanto, informativos e servem para acompanhamento histórico — não substituem ' +
+    'o relatório oficial de consumo da ServiceNow.'
+
+/** ServiceNow's internal code for Brazilian Portuguese is 'pb', not 'pt-br'. */
+function sessionLang(): 'en' | 'pb' {
+    return gs.getSession().getLanguage() === 'pb' ? 'pb' : 'en'
+}
+
+/**
+ * Brazilian Portuguese overrides for suite/application/source text, applied here
+ * rather than through ServiceNow's native per-record translation (sys_translated_text).
+ * That mechanism was tried first — TranslatedTextColumn/TranslatedFieldColumn fields,
+ * seeded via Record() and later via a runtime script include — but scoped-app code is
+ * blocked from writing sys_translated_text even with an explicit cross-scope create/write
+ * privilege granted; only a global-scope admin script could write to it. Rather than
+ * depend on an instance admin manually approving that cross-scope access (Studio's
+ * "Allow this application access" flow) on every install, this keeps translation fully
+ * inside app code, the same way DISCLAIMER_*_PB already works above.
+ */
+const SUITE_TEXT_PB: Record<string, { name?: string; methodology: string }> = {
+    itsm: {
+        name: 'Gestão de Serviços de TI',
+        methodology:
+            'Usuários distintos que possuem qualquer role mapeada para esta suíte na data da coleta. Um usuário com várias roles mapeadas é contado uma única vez, e um usuário que é tanto fulfiller quanto business stakeholder é contado apenas como fulfiller.',
+    },
+    spm: {
+        name: 'Gestão Estratégica de Portfólio',
+        methodology:
+            'Usuários distintos que possuem qualquer role mapeada para esta suíte na data da coleta. Observe que a ServiceNow define a unidade de SPM por direito de acesso, o que é mais amplo do que a simples posse da role.',
+    },
+    itom_visibility: {
+        methodology:
+            'Unidades de assinatura que o ITOM Visibility publica em itom_lu_ci_counts, somadas entre as categorias de CI para a coleta mais recente. As proporções vêm do próprio produto. A ServiceNow fatura com base numa média de 90 dias das contagens diárias, portanto este número diário será diferente.',
+    },
+    sam: {
+        name: 'Gestão de Ativos de Software',
+        methodology:
+            'Unidades de assinatura que o Software Asset Management publica em itam_licensing_resource_counts, somadas entre as categorias de recurso. As proporções vêm do próprio produto.',
+    },
+    ham: {
+        name: 'Gestão de Ativos de Hardware',
+        methodology:
+            'Unidades de assinatura que o Hardware Asset Management publica em itam_licensing_resource_counts, somadas entre as categorias de recurso. As proporções vêm do próprio produto.',
+    },
+    unrestricted: {
+        name: 'Usuários Irrestritos',
+        methodology:
+            'Todos os usuários ativos com um ID de usuário que não são contas apenas de web service, independentemente da role. Este é o universo do qual os produtos medidos como Unrestricted User partem.',
+    },
+    rpa: {
+        name: 'Automação Robótica de Processos',
+        methodology:
+            'Robôs não assistidos utilizados, lidos do registro de distribuição de licenças do RPA Hub. O licenciamento de RPA é uma alocação de pool por domínio, e não uma medição de uso.',
+    },
+    vr: {
+        name: 'Resposta a Vulnerabilidades',
+        methodology:
+            'Unidades de assinatura que o aplicativo de licenciamento do Vulnerability Response publica por categoria. A ServiceNow mede as unidades de assinatura de VR numa janela de 30 dias, portanto este número diário será diferente.',
+    },
+    sir: {
+        name: 'Resposta a Incidentes de Segurança',
+        methodology:
+            'Usuários distintos que possuem uma role de Security Incident Response na data da coleta. A entitlement do SIR em si é contratada como Unrestricted User — todo usuário ativo da instância, independentemente da role — o que é um número muito maior, mostrado na suíte Usuários Irrestritos. Este número é mais restrito e mostra quem de fato usa o SIR.',
+    },
+    app_engine: {
+        methodology:
+            'Nenhuma figura de consumo on-instance. As SKUs de attach do App Engine são precificadas como um percentual do gasto líquido, o que não é uma quantidade contável. Apenas a entitlement registrada é exibida.',
+    },
+}
+
+const APPLICATION_LABEL_PB: Record<string, string> = {
+    'Incident Management': 'Gestão de Incidentes',
+    'Problem Management': 'Gestão de Problemas',
+    'Change Management': 'Gestão de Mudanças',
+    'Request Management': 'Gestão de Solicitações',
+    'Demand Management': 'Gestão de Demandas',
+    'Financial Planning': 'Planejamento Financeiro',
+    'Project Management': 'Gestão de Projetos',
+    'Resource Management': 'Gestão de Recursos',
+    Global: 'Global',
+    'Security Incident Response': 'Resposta a Incidentes de Segurança',
+}
+
+/** Only the source labels that can surface as a category name — see categoriesFor(). */
+const SOURCE_LABEL_PB: Record<string, string> = {
+    'Unattended robots utilized': 'Robôs não assistidos utilizados',
+}
 
 interface CategoryRow {
     category: string
@@ -84,6 +180,7 @@ function categoriesFor(suiteId: string, day: string): CategoryRow[] {
     if (!day) {
         return rows
     }
+    const pb = sessionLang() === 'pb'
     const snap = new GlideRecord(SNAPSHOT)
     snap.addQuery('suite', suiteId)
     snap.addQuery('snapshot_date', day)
@@ -93,8 +190,9 @@ function categoriesFor(suiteId: string, day: string): CategoryRow[] {
         if (isDetailRow(snap)) {
             continue // surfaced separately via /suites/{code}/roles, not part of the totals
         }
+        const category = snap.getValue('category') || ''
         rows.push({
-            category: snap.getValue('category') || '',
+            category: pb ? SOURCE_LABEL_PB[category] || category : category,
             su_count: toInt(snap.getValue('su_count')),
             resource_count: toInt(snap.getValue('resource_count')),
             allocated_count: toInt(snap.getValue('allocated_count')),
@@ -105,6 +203,21 @@ function categoriesFor(suiteId: string, day: string): CategoryRow[] {
         })
     }
     return rows
+}
+
+/**
+ * The application grouping is looked up live from Role to Suite Mapping rather
+ * than trusted from the frozen snapshot copy, so an admin's later edit to the
+ * mapping is reflected immediately instead of waiting for the next collection.
+ */
+function currentApplicationLabel(suiteId: string, roleName: string): string {
+    const map = new GlideRecord(ROLE_MAP)
+    map.addQuery('suite', suiteId)
+    map.addQuery('role.name', roleName)
+    map.setLimit(1)
+    map.query()
+    const label = map.next() ? map.getValue('application_label') || '' : ''
+    return sessionLang() === 'pb' ? APPLICATION_LABEL_PB[label] || label : label
 }
 
 /**
@@ -129,9 +242,10 @@ function roleBreakdownFor(suiteId: string, day: string): RoleBreakdownRow[] {
         }
         const allocated = toInt(snap.getValue('allocated_count'))
         const active365 = toInt(snap.getValue('active_365_count'))
+        const roleName = snap.getValue('category') || ''
         rows.push({
-            role: snap.getValue('category') || '',
-            application: snap.getValue('application_label') || '',
+            role: roleName,
+            application: currentApplicationLabel(suiteId, roleName) || snap.getValue('application_label') || '',
             role_type: snap.getValue('role_type') || '',
             allocated: allocated,
             active_365: active365,
@@ -162,11 +276,15 @@ export function getSuites(request: any, response: any): void {
     suite.orderBy('display_order')
     suite.query()
 
+    const pb = sessionLang() === 'pb'
+
     while (suite.next()) {
         const suiteId = suite.getUniqueValue()
+        const code = suite.getValue('code') || ''
         const unit = suite.getValue('unit') || ''
         const day = latestSnapshotDate(suiteId)
         const categories = categoriesFor(suiteId, day)
+        const pbText = pb ? SUITE_TEXT_PB[code] : undefined
 
         let consumption = 0
         let allocated = 0
@@ -198,13 +316,13 @@ export function getSuites(request: any, response: any): void {
         const contracted = contractQuantity(suiteId)
 
         suites.push({
-            code: suite.getValue('code'),
-            name: suite.getValue('name'),
+            code: code,
+            name: pbText?.name ?? suite.getValue('name'),
             unit: unit,
             counting_method: suite.getValue('counting_method'),
             collection_enabled: suite.getValue('collection_enabled') === '1',
             dashboard_visible: isVisible(suite.getValue('dashboard_visible')),
-            methodology: suite.getValue('methodology') || '',
+            methodology: pbText?.methodology ?? suite.getValue('methodology') ?? '',
             last_collected: day,
             consumption: consumption,
             allocated: allocated,
@@ -218,7 +336,7 @@ export function getSuites(request: any, response: any): void {
         })
     }
 
-    response.setBody({ suites: suites, disclaimer: DISCLAIMER_SHORT })
+    response.setBody({ suites: suites, disclaimer: sessionLang() === 'pb' ? DISCLAIMER_SHORT_PB : DISCLAIMER_SHORT_EN })
 }
 
 /**
@@ -279,9 +397,11 @@ export function getTrend(request: any, response: any): void {
         })
     }
 
+    const pbName = sessionLang() === 'pb' ? SUITE_TEXT_PB[code]?.name : undefined
+
     response.setBody({
         code: code,
-        name: suite.getValue('name'),
+        name: pbName ?? suite.getValue('name'),
         unit: unit,
         from: from,
         to: to,
@@ -308,17 +428,19 @@ function instanceTheme(): unknown {
     }
 }
 
-/** GET /meta — disclaimer text, instance theme and collection freshness. */
+/** GET /meta — disclaimer text, instance theme, session language and collection freshness. */
 export function getMeta(request: any, response: any): void {
     const latest = new GlideRecord(SNAPSHOT)
     latest.orderByDesc('snapshot_date')
     latest.setLimit(1)
     latest.query()
     const lastCollected = latest.next() ? asDate(latest.getValue('snapshot_date')) : ''
+    const lang = sessionLang()
 
     response.setBody({
-        disclaimer_short: DISCLAIMER_SHORT,
-        disclaimer_full: DISCLAIMER_FULL,
+        language: lang,
+        disclaimer_short: lang === 'pb' ? DISCLAIMER_SHORT_PB : DISCLAIMER_SHORT_EN,
+        disclaimer_full: lang === 'pb' ? DISCLAIMER_FULL_PB : DISCLAIMER_FULL_EN,
         last_collected: lastCollected,
         windows: [7, 14, 30, 60, 90, 180, 240, 365],
         theme: instanceTheme(),
@@ -345,10 +467,11 @@ export function getRoleBreakdown(request: any, response: any): void {
 
     const suiteId = suite.getUniqueValue()
     const day = latestSnapshotDate(suiteId)
+    const pbName = sessionLang() === 'pb' ? SUITE_TEXT_PB[code]?.name : undefined
 
     response.setBody({
         code: code,
-        name: suite.getValue('name'),
+        name: pbName ?? suite.getValue('name'),
         as_of: day,
         roles: roleBreakdownFor(suiteId, day),
     })

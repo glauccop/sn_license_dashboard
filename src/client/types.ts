@@ -70,27 +70,10 @@ export interface Theme {
 }
 
 export interface Meta {
+    language: 'en' | 'pb'
     disclaimer_short: string
     disclaimer_full: string
     last_collected: string
     windows: number[]
     theme: Theme
-}
-
-export const UNIT_LABELS: Record<string, string> = {
-    subscription_unit: 'subscription units',
-    fulfiller_user: 'fulfiller users',
-    user: 'users',
-    unrestricted_user: 'active users',
-    device: 'devices',
-    unattended_robot: 'unattended robots',
-    not_countable: 'not countable',
-}
-
-export const STATUS_LABELS: Record<string, string> = {
-    ok: 'Collected',
-    no_data: 'No data',
-    table_missing: 'Source not present',
-    not_measurable: 'Not measurable',
-    error: 'Collection error',
 }

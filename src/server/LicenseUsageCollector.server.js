@@ -273,16 +273,18 @@ LicenseUsageCollector.prototype = {
         }
 
         // Per-individual-role detail, e.g. itil / itil_admin / sn_incident_write.
-        // Deliberately not deduplicated against each other — a user holding two
-        // mapped roles appears under both, matching how the source usage report
-        // itself breaks out consumption per role. Marked is_detail so the totals
-        // above (which are deduplicated) are never double-counted with these.
-        rows = rows.concat(this._roleBreakdownRows(suiteId))
+        // Deliberately not deduplicated against other roles of the SAME type — a
+        // user holding two mapped fulfiller roles appears under both, matching how
+        // the source usage report breaks out consumption per role. But a stakeholder
+        // role still excludes anyone already counted as a fulfiller above, or this
+        // table would show far more "stakeholders" than the deduplicated total ever
+        // does. Marked is_detail so the totals above are never double-counted with these.
+        rows = rows.concat(this._roleBreakdownRows(suiteId, fulfillers, fulfillers365))
 
         return rows
     },
 
-    _roleBreakdownRows: function (suiteId) {
+    _roleBreakdownRows: function (suiteId, fulfillers, fulfillers365) {
         var rows = []
         var map = new GlideRecord(this.ROLE_MAP)
         map.addQuery('suite', suiteId)
@@ -301,13 +303,22 @@ LicenseUsageCollector.prototype = {
                 roleName = roleRecord.getValue('name') || roleName
             }
 
+            var roleType = map.getValue('role_type')
             var users = this._distinctUsers([roleId], false)
             var users365 = this._distinctUsers([roleId], true)
+
+            if (roleType === 'business_stakeholder') {
+                // Same mutual-exclusion rule as the summary above: a user who also
+                // holds a fulfiller role is a fulfiller, not a stakeholder, even
+                // though this specific role is tagged business_stakeholder.
+                users = this._exclude(users, fulfillers)
+                users365 = this._exclude(users365, fulfillers365)
+            }
 
             rows.push({
                 category: roleName,
                 application_label: map.getValue('application_label') || '',
-                role_type: map.getValue('role_type'),
+                role_type: roleType,
                 allocated_count: this._size(users),
                 active_365_count: this._size(users365),
                 is_detail: true,

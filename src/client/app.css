@@ -564,6 +564,11 @@ body {
     color: var(--ink-faint);
 }
 
+.detail-hint {
+    margin: -4px 0 10px;
+    font-size: 12px;
+}
+
 /* --------------------------------------------------------------- messages */
 
 .app-error {

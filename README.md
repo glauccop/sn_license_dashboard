@@ -27,6 +27,8 @@ The gap between them is allocation that could likely be reclaimed. The 365-day c
 
 A user holding several mapped roles of the same suite counts **once** — allocation is per person, not per role. A user who qualifies as both a Fulfiller and a Business Stakeholder counts only as a Fulfiller, per ServiceNow's own definition of the two (a Fulfiller is any user entitled to more than a Business Stakeholder).
 
+Opening a role-based suite on the dashboard also shows a **By role** breakdown (e.g. `itil`, `sn_incident_write`, `sn_change_read`). These rows are deliberately not deduplicated against other roles of the same type — a user holding two mapped Fulfiller roles appears under both, matching how the source usage report itself breaks out consumption per role. A Business Stakeholder role is the exception: it excludes anyone already counted as a Fulfiller above, for the same mutual-exclusion reason as the summary.
+
 Security Incident Response has no product-published licensing table on this instance, so it is counted by role like ITSM and SPM — even though its own SKU is contracted as Unrestricted User (every active user, regardless of role). The dashboard shows the narrower, role-based figure and says so in its methodology text, since it is far more informative than "every active user in the instance."
 
 ## What ships, and what does not
@@ -53,6 +55,18 @@ Colours are the app's own configuration, not the instance's Next Experience them
 | `x_snc_lic_alloc.theme.accent` | Charts and highlights | `#3d68c4` |
 
 Set these per instance to match the customer's brand. The logo still follows the instance's own `glide.product.image`.
+
+## Language
+
+The dashboard follows the ServiceNow session's language. Today it ships English (the base language) and Brazilian Portuguese, with Portuguese covering:
+
+- Every fixed label, header, and message the React dashboard itself draws (`src/client/i18n.ts`).
+- Suite names, methodology text, and role-to-application labels, translated server-side (`src/server/handlers/dashboard.ts`) rather than through ServiceNow's own per-record translation table (`sys_translated_text`) — scoped-app code is blocked from writing that table even with an explicit cross-scope create/write privilege granted, so this keeps translation entirely inside app code instead of depending on an instance admin approving cross-scope access on every install.
+- Table, field, and choice labels for the app's own 5 tables (`sys_documentation` / `sys_choice`, seeded via `src/fluent/seed/dictionary-pt-br.now.ts` and `choices-pt-br.now.ts`), so the native list and form views are also translated. SKU/unit-of-measure vocabulary (Subscription Unit, Fulfiller, Business Stakeholder, etc.) is left in English on purpose, since those are the literal terms on a ServiceNow quote.
+
+**Known gap:** the Application Navigator entries (the "License Allocation" menu and its 6 modules) stay in English regardless of session language — the same `sys_translated_text` restriction above blocks translating them, and there is no app-code-only workaround for platform-rendered navigation.
+
+Adding another language means extending `Lang`/`STRINGS` in `src/client/i18n.ts`, the `SUITE_TEXT_PB`/`APPLICATION_LABEL_PB`/`SOURCE_LABEL_PB`-style tables and `sessionLang()` in `dashboard.ts`, and re-running the dictionary/choice seed generator for that language's `sys_documentation`/`sys_choice` rows.
 
 ## Installation
 
