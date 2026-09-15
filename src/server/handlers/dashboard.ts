@@ -45,12 +45,18 @@ function asDate(value: string | null): string {
     return (value || '').split(' ')[0]
 }
 
+/**
+ * Ordered read rather than a MAX aggregate: MAX over this date column returns
+ * the earliest value, not the latest, which silently pins the whole dashboard
+ * to the oldest day of history.
+ */
 function latestSnapshotDate(suiteId: string): string {
-    const agg = new GlideAggregate(SNAPSHOT)
-    agg.addQuery('suite', '=', suiteId)
-    agg.addAggregate('MAX', 'snapshot_date')
-    agg.query()
-    return agg.next() ? asDate(agg.getAggregate('MAX', 'snapshot_date')) : ''
+    const gr = new GlideRecord(SNAPSHOT)
+    gr.addQuery('suite', suiteId)
+    gr.orderByDesc('snapshot_date')
+    gr.setLimit(1)
+    gr.query()
+    return gr.next() ? asDate(gr.getValue('snapshot_date')) : ''
 }
 
 function categoriesFor(suiteId: string, day: string): CategoryRow[] {
@@ -244,10 +250,11 @@ function instanceTheme(): unknown {
 
 /** GET /meta — disclaimer text, instance theme and collection freshness. */
 export function getMeta(request: any, response: any): void {
-    const agg = new GlideAggregate(SNAPSHOT)
-    agg.addAggregate('MAX', 'snapshot_date')
-    agg.query()
-    const lastCollected = agg.next() ? asDate(agg.getAggregate('MAX', 'snapshot_date')) : ''
+    const latest = new GlideRecord(SNAPSHOT)
+    latest.orderByDesc('snapshot_date')
+    latest.setLimit(1)
+    latest.query()
+    const lastCollected = latest.next() ? asDate(latest.getValue('snapshot_date')) : ''
 
     response.setBody({
         disclaimer_short: DISCLAIMER_SHORT,

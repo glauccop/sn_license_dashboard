@@ -201,17 +201,21 @@ LicenseUsageCollector.prototype = {
      * seconds, and an exact-timestamp match would keep only part of it.
      */
     _latestDayBound: function (tableName, dateField, baseQuery) {
-        var agg = new GlideAggregate(tableName)
+        // Ordered read rather than a MAX aggregate: MAX over a date column
+        // returns the earliest value, which would pin the read to the oldest
+        // collection the product ever wrote.
+        var gr = new GlideRecord(tableName)
         if (baseQuery) {
-            agg.addEncodedQuery(baseQuery)
+            gr.addEncodedQuery(baseQuery)
         }
-        agg.addAggregate('MAX', dateField)
-        agg.query()
-        if (!agg.next()) {
+        gr.orderByDesc(dateField)
+        gr.setLimit(1)
+        gr.query()
+        if (!gr.next()) {
             return null
         }
 
-        var max = agg.getAggregate('MAX', dateField)
+        var max = gr.getValue(dateField)
         if (!max) {
             return null
         }
@@ -469,15 +473,15 @@ LicenseUsageCollector.prototype = {
         }
         var unit = suite.getValue('unit')
 
-        var latest = new GlideAggregate(this.SNAPSHOT)
+        var latest = new GlideRecord(this.SNAPSHOT)
         latest.addQuery('suite', suiteId)
-        latest.addAggregate('MAX', 'snapshot_date')
+        latest.orderByDesc('snapshot_date')
+        latest.setLimit(1)
         latest.query()
         if (!latest.next()) {
             return 0
         }
-        // MAX over a date column comes back datetime-formatted; the stored value is a bare date.
-        var day = (latest.getAggregate('MAX', 'snapshot_date') || '').split(' ')[0]
+        var day = (latest.getValue('snapshot_date') || '').split(' ')[0]
         if (!day) {
             return 0
         }
