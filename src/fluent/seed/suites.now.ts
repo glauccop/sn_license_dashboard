@@ -151,13 +151,13 @@ export const suiteSir = Record({
     data: {
         code: 'sir',
         name: 'Security Incident Response',
-        unit: 'subscription_unit',
-        counting_method: 'native_counts',
-        collection_enabled: false,
+        unit: 'unrestricted_user',
+        counting_method: 'role_based',
+        collection_enabled: true,
         display_order: 90,
         active: true,
         methodology:
-            'Usage counts the shared risk and security licensing application publishes per application family. Aggregated monthly by the product, so narrow the source to the relevant family before enabling.',
+            'Distinct users holding a Security Incident Response role on the collection date. The SIR entitlement itself is contracted as Unrestricted User — every active user of the instance, regardless of role — which is a much larger number shown under the Unrestricted Users suite. This figure is narrower and shows who actually uses SIR.',
     },
 })
 

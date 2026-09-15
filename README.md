@@ -25,7 +25,9 @@ Each product is described by a row in **Metric Sources**, so supporting a new pr
 
 The gap between them is allocation that could likely be reclaimed. The 365-day condition is the universe ServiceNow's own Subscription Management documentation describes, which makes the second figure the one to compare against an official report.
 
-A user holding several mapped roles of the same suite counts **once** — allocation is per person, not per role.
+A user holding several mapped roles of the same suite counts **once** — allocation is per person, not per role. A user who qualifies as both a Fulfiller and a Business Stakeholder counts only as a Fulfiller, per ServiceNow's own definition of the two (a Fulfiller is any user entitled to more than a Business Stakeholder).
+
+Security Incident Response has no product-published licensing table on this instance, so it is counted by role like ITSM and SPM — even though its own SKU is contracted as Unrestricted User (every active user, regardless of role). The dashboard shows the narrower, role-based figure and says so in its methodology text, since it is far more informative than "every active user in the instance."
 
 ## What ships, and what does not
 
@@ -35,13 +37,31 @@ Shipped: the suite catalogue, metric source configuration for the products above
 
 Suites whose measurement could not be verified ship with collection **off**. Turn them on once you have checked what their source table contains on your instance.
 
+## Access control
+
+The menu and every module are gated to the platform **`admin`** role, and each of the five tables has its own ACL requiring it — the app does not rely on the platform's generic wildcard ACL, even though that happens to also require `admin` today. The REST API the dashboard reads from has its own `admin`-only ACL as well; without it, any authenticated internal user could call the endpoints, since the OOB default REST ACL only blocks *external* users.
+
+Two roles ship with the app (`x_snc_lic_alloc.admin`, `x_snc_lic_alloc.viewer`) as a documented extension point, not wired into any gating yet — start there when you want to open access to product-specific admin roles (`usage_admin`, `itil_admin`, `sam_admin`, etc.) instead of platform `admin`.
+
+## Appearance
+
+Colours are the app's own configuration, not the instance's Next Experience theme — a generic, shareable app should not default to any one customer's brand. Two system properties control it:
+
+| Property | Purpose | Default |
+|---|---|---|
+| `x_snc_lic_alloc.theme.primary` | Header background | `#1f2933` |
+| `x_snc_lic_alloc.theme.accent` | Charts and highlights | `#3d68c4` |
+
+Set these per instance to match the customer's brand. The logo still follows the instance's own `glide.product.image`.
+
 ## Installation
 
 1. Install the application.
-2. Open **License Allocation → Product Collection** and enable the suites you want collected.
-3. Open **License Allocation → Entitlements** and enter your contracted quantities.
-4. Run **License Allocation - Daily Collection** once manually, rather than waiting for the overnight run, to confirm it works.
-5. Open **License Allocation → Dashboard**.
+2. Set `x_snc_lic_alloc.theme.primary` and `x_snc_lic_alloc.theme.accent` if you want the dashboard to match a specific brand.
+3. Open **License Allocation → Product Collection** and enable the suites you want collected.
+4. Open **License Allocation → Entitlements** and enter your contracted quantities.
+5. Run **License Allocation - Daily Collection** once manually, rather than waiting for the overnight run, to confirm it works.
+6. Open **License Allocation → Dashboard**.
 
 ### Cross-scope reads
 
@@ -62,8 +82,6 @@ The collector reads tables owned by other applications. If a product's licensing
 
 Period windows of 7, 14, 30, 60, 90, 180, 240 and 365 days, plus a custom date range. The series is drawn from the daily snapshots, so it only shows days on which collection actually ran — it does not interpolate.
 
-Colours and logo come from the instance's own branding properties, so the page follows whatever theme the instance is running.
-
 ## Known differences from official measurement
 
 These are expected, and are the reason for the disclaimer:
@@ -72,6 +90,7 @@ These are expected, and are the reason for the disclaimer:
 - **Vulnerability Response** subscription units are officially metered over a 30-day window.
 - **Role inheritance** is counted here whenever a user effectively holds a mapped role. How ServiceNow treats inherited roles in its own counting is not publicly documented.
 - **App Engine** attach SKUs are priced as a percentage of net spend, which is not a countable quantity, so no consumption figure is produced.
+- **Security Incident Response** is contracted as Unrestricted User (every active user of the instance), but shown here as role-based allocation — a much narrower and more useful figure. See "How it counts" above.
 - Final reconciliation of any subscription happens on ServiceNow's side, not on the instance.
 
 ## Development

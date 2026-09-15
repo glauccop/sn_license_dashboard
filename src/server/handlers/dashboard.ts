@@ -233,16 +233,18 @@ export function getTrend(request: any, response: any): void {
 }
 
 /**
- * The page takes its colours from the instance's own branding properties, so it
- * follows whatever theme the instance is running rather than carrying a palette
- * of its own.
+ * The dashboard's colours are its own property (see fluent/properties.now.ts),
+ * not the instance's Next Experience theme — a published, generic app should
+ * not carry any one customer's brand as its default. Each instance sets its
+ * own values; the logo still follows the instance, since that has no such
+ * conflict.
  */
 function instanceTheme(): unknown {
     const logo = gs.getProperty('glide.product.image', '')
     return {
-        primary: gs.getProperty('css.$navpage-header-bg', '#293e40'),
-        accent: gs.getProperty('css.$navpage-nav-selected-bg', '#2f4f4e'),
-        header_text: gs.getProperty('css.$navpage-header-color', '#ffffff'),
+        primary: gs.getProperty('x_snc_lic_alloc.theme.primary', '#1f2933'),
+        accent: gs.getProperty('x_snc_lic_alloc.theme.accent', '#3d68c4'),
+        header_text: '#ffffff',
         product_name: gs.getProperty('glide.product.name', 'ServiceNow'),
         logo_url: logo ? '/' + logo : '',
     }

@@ -1,6 +1,7 @@
 import '@servicenow/sdk/global'
 import { RestApi } from '@servicenow/sdk/core'
 import { getSuites, getTrend, getMeta } from '../../server/handlers/dashboard'
+import { dashboardApiAcl } from '../acl/rest.now'
 
 RestApi({
     $id: Now.ID['api-dashboard'],
@@ -9,6 +10,7 @@ RestApi({
     shortDescription: 'Reads license allocation snapshots for the dashboard UI.',
     consumes: 'application/json',
     produces: 'application/json',
+    enforceAcl: [dashboardApiAcl],
     versions: [{ $id: Now.ID['api-dashboard-v1'], version: 1, isDefault: true, active: true }],
     routes: [
         {
@@ -19,6 +21,7 @@ RestApi({
             path: '/suites',
             shortDescription: 'Current allocation position for every suite.',
             script: getSuites,
+            enforceAcl: [dashboardApiAcl],
         },
         {
             $id: Now.ID['api-dashboard-trend'],
@@ -28,6 +31,7 @@ RestApi({
             path: '/suites/{code}/trend',
             shortDescription: 'Daily series for one suite over a window or explicit date range.',
             script: getTrend,
+            enforceAcl: [dashboardApiAcl],
         },
         {
             $id: Now.ID['api-dashboard-meta'],
@@ -37,6 +41,7 @@ RestApi({
             path: '/meta',
             shortDescription: 'Disclaimer text, available windows and collection freshness.',
             script: getMeta,
+            enforceAcl: [dashboardApiAcl],
         },
     ],
 })

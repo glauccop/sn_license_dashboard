@@ -1,13 +1,6 @@
 import '@servicenow/sdk/global'
 import { Record } from '@servicenow/sdk/core'
-import {
-    suiteItomVisibility,
-    suiteSam,
-    suiteHam,
-    suiteRpa,
-    suiteVr,
-    suiteSir,
-} from './suites.now'
+import { suiteItomVisibility, suiteSam, suiteHam, suiteRpa, suiteVr } from './suites.now'
 
 /**
  * Reader configuration for the licensing counts each product already publishes.
@@ -112,18 +105,7 @@ Record({
     },
 })
 
-Record({
-    $id: Now.ID['source-sir'],
-    $meta: FIRST_INSTALL,
-    table: 'x_snc_lic_alloc_source',
-    data: {
-        suite: suiteSir,
-        label: 'Risk and security usage counts',
-        source_table: 'sn_irm_shared_cmn_aggregated_usage_count',
-        category_field: 'licensable_application_family',
-        count_field: 'usage_count',
-        date_field: 'aggregation_date',
-        value_basis: 'resource_count',
-        active: true,
-    },
-})
+// SIR has no licensing/usage table of its own on this instance — the table
+// that superficially looked like a fit (sn_irm_shared_cmn_aggregated_usage_count)
+// is GRC/IRM/PRM/BCM user-role licensing and has no Security Incident Response
+// family. SIR is counted by role instead — see role-map.now.ts.

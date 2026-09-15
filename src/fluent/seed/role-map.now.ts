@@ -1,6 +1,6 @@
 import '@servicenow/sdk/global'
 import { Record } from '@servicenow/sdk/core'
-import { suiteItsm, suiteSpm } from './suites.now'
+import { suiteItsm, suiteSpm, suiteSir } from './suites.now'
 
 /**
  * Default mapping of base ServiceNow roles to suites, so a fresh install has
@@ -432,6 +432,85 @@ Record({
         suite: suiteSpm,
         role: 'demand_approver',
         application_label: 'Demand Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+// ----------------------------------------------------------------- SIR · Fulfiller
+//
+// SIR has no product-published licensing table on this instance (see
+// sources.now.ts) — this suite is counted by role instead. Safe to list roles
+// that may not exist on every instance: the collector resolves each mapping's
+// role by name and skips any it cannot find.
+
+Record({
+    $id: Now.ID['rm-sir-admin'],
+    $meta: FIRST_INSTALL,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteSir,
+        role: 'sn_si.admin',
+        application_label: 'Security Incident Response',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-sir-manager'],
+    $meta: FIRST_INSTALL,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteSir,
+        role: 'sn_si.manager',
+        application_label: 'Security Incident Response',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-sir-analyst'],
+    $meta: FIRST_INSTALL,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteSir,
+        role: 'sn_si.analyst',
+        application_label: 'Security Incident Response',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+// ------------------------------------------------------- SIR · Business Stakeholder
+
+Record({
+    $id: Now.ID['rm-sir-basic'],
+    $meta: FIRST_INSTALL,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteSir,
+        role: 'sn_si.basic',
+        application_label: 'Security Incident Response',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-sir-read'],
+    $meta: FIRST_INSTALL,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteSir,
+        role: 'sn_si.read',
+        application_label: 'Security Incident Response',
         role_type: 'business_stakeholder',
         source: 'default',
         active: true,

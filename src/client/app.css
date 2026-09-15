@@ -1,6 +1,8 @@
 :root {
-    --licalloc-primary: #293e40;
-    --licalloc-accent: #2f4f4e;
+    /* Neutral fallback for local dev only — the real defaults ship as
+       instance properties (x_snc_lic_alloc.theme.*), read via /meta. */
+    --licalloc-primary: #1f2933;
+    --licalloc-accent: #3d68c4;
     --licalloc-header-text: #ffffff;
 
     --ink: #1b1d21;
