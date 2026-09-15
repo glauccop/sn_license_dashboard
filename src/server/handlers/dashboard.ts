@@ -380,6 +380,7 @@ export function getTrend(request: any, response: any): void {
     agg.addQuery('suite', '=', suiteId)
     agg.addQuery('snapshot_date', '>=', from)
     agg.addQuery('snapshot_date', '<=', to)
+    agg.addQuery('is_detail', '=', false) // exclude per-role detail rows; they overlap the totals
     agg.groupBy('snapshot_date')
     agg.addAggregate('SUM', field)
     agg.addAggregate('SUM', 'allocated_count')
