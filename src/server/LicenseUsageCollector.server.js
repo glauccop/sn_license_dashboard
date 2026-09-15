@@ -271,6 +271,50 @@ LicenseUsageCollector.prototype = {
         if (rows.length === 0) {
             rows.push({ category: '', data_status: 'no_data', error_message: 'No roles mapped to this suite' })
         }
+
+        // Per-individual-role detail, e.g. itil / itil_admin / sn_incident_write.
+        // Deliberately not deduplicated against each other — a user holding two
+        // mapped roles appears under both, matching how the source usage report
+        // itself breaks out consumption per role. Marked is_detail so the totals
+        // above (which are deduplicated) are never double-counted with these.
+        rows = rows.concat(this._roleBreakdownRows(suiteId))
+
+        return rows
+    },
+
+    _roleBreakdownRows: function (suiteId) {
+        var rows = []
+        var map = new GlideRecord(this.ROLE_MAP)
+        map.addQuery('suite', suiteId)
+        map.addQuery('active', true)
+        map.query()
+
+        while (map.next()) {
+            var roleId = this._resolveRoleId(map.getValue('role'))
+            if (!roleId) {
+                continue // role does not exist on this instance — skip rather than fail
+            }
+
+            var roleName = map.getValue('role')
+            var roleRecord = new GlideRecord('sys_user_role')
+            if (roleRecord.get(roleId)) {
+                roleName = roleRecord.getValue('name') || roleName
+            }
+
+            var users = this._distinctUsers([roleId], false)
+            var users365 = this._distinctUsers([roleId], true)
+
+            rows.push({
+                category: roleName,
+                application_label: map.getValue('application_label') || '',
+                role_type: map.getValue('role_type'),
+                allocated_count: this._size(users),
+                active_365_count: this._size(users365),
+                is_detail: true,
+                data_status: 'ok',
+            })
+        }
+
         return rows
     },
 
@@ -424,6 +468,8 @@ LicenseUsageCollector.prototype = {
             snap.setValue('category', row.category || '')
             snap.setValue('data_status', row.data_status || 'ok')
             if (row.role_type) snap.setValue('role_type', row.role_type)
+            if (row.application_label) snap.setValue('application_label', row.application_label)
+            if (row.is_detail) snap.setValue('is_detail', true)
             if (row.su_count != null) snap.setValue('su_count', row.su_count)
             if (row.resource_count != null) snap.setValue('resource_count', row.resource_count)
             if (row.allocated_count != null) snap.setValue('allocated_count', row.allocated_count)
@@ -439,6 +485,9 @@ LicenseUsageCollector.prototype = {
     _sumRows: function (rows, unit) {
         var total = 0
         for (var i = 0; i < rows.length; i++) {
+            if (rows[i].is_detail) {
+                continue // per-role detail overlaps with the totals above; not part of the sum
+            }
             if (unit === 'subscription_unit') {
                 total += rows[i].su_count || 0
             } else if (rows[i].allocated_count != null) {
@@ -491,6 +540,7 @@ LicenseUsageCollector.prototype = {
         var agg = new GlideAggregate(this.SNAPSHOT)
         agg.addQuery('suite', suiteId)
         agg.addQuery('snapshot_date', day)
+        agg.addQuery('is_detail', false) // exclude per-role detail rows; they overlap the totals
         agg.addAggregate('SUM', field)
         agg.query()
         return agg.next() ? parseInt(agg.getAggregate('SUM', field), 10) || 0 : 0

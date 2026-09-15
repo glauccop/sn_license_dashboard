@@ -113,6 +113,109 @@ body {
 
 /* ------------------------------------------------------------ suite grid */
 
+.suite-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+}
+
+.suite-settings {
+    position: relative;
+}
+
+.gear-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.gear-button:hover,
+.gear-button[aria-expanded='true'] {
+    border-color: var(--licalloc-accent);
+    color: var(--licalloc-accent);
+}
+
+.suite-settings-panel {
+    position: absolute;
+    top: 36px;
+    right: 0;
+    z-index: 10;
+    width: 280px;
+    padding: 10px 0;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: 0 6px 20px rgba(27, 29, 33, 0.14);
+}
+
+.suite-settings-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.suite-settings-close {
+    padding: 2px 8px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--licalloc-accent);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.suite-settings-list {
+    list-style: none;
+    max-height: 320px;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.suite-settings-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.suite-settings-item:hover {
+    background: var(--canvas);
+}
+
+.suite-settings-item input {
+    flex: none;
+}
+
+.suite-settings-hint {
+    margin-left: auto;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: var(--canvas);
+    color: var(--ink-faint);
+    font-size: 10px;
+    white-space: nowrap;
+}
+
 .suite-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
@@ -444,6 +547,21 @@ body {
 .detail-table .is-numeric {
     text-align: right;
     font-variant-numeric: tabular-nums;
+}
+
+.detail-roles {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+}
+
+.detail-subheading {
+    margin: 0 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
 }
 
 /* --------------------------------------------------------------- messages */

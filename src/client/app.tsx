@@ -3,9 +3,10 @@ import './app.css'
 import AppHeader from './components/AppHeader'
 import PeriodSelector from './components/PeriodSelector'
 import SuiteGrid from './components/SuiteGrid'
+import SuiteSettings from './components/SuiteSettings'
 import SuiteDetail from './components/SuiteDetail'
 import TrendChart from './components/TrendChart'
-import { fetchMeta, fetchSuites, fetchTrend } from './services/api'
+import { fetchMeta, fetchSuites, fetchTrend, setSuiteVisibility } from './services/api'
 import type { Meta, Suite, Trend } from './types'
 
 const DEFAULT_WINDOWS = [7, 14, 30, 60, 90, 180, 240, 365]
@@ -25,8 +26,10 @@ export default function App() {
             .then(([metaResult, suitesResult]) => {
                 setMeta(metaResult)
                 setSuites(suitesResult.suites)
-                const firstCollected = suitesResult.suites.find((s) => s.collection_enabled)
-                setSelected(firstCollected?.code ?? suitesResult.suites[0]?.code ?? '')
+                const visible = suitesResult.suites.filter((s) => s.dashboard_visible)
+                const pool = visible.length > 0 ? visible : suitesResult.suites
+                const firstCollected = pool.find((s) => s.collection_enabled)
+                setSelected(firstCollected?.code ?? pool[0]?.code ?? '')
             })
             .catch((e: Error) => setError(e.message))
             .finally(() => setLoading(false))
@@ -51,6 +54,16 @@ export default function App() {
         : undefined
 
     const activeSuite = suites.find((s) => s.code === selected)
+    const visibleSuites = suites.filter((s) => s.dashboard_visible)
+
+    function handleToggleVisibility(code: string, visible: boolean) {
+        setSuites((prev) => prev.map((s) => (s.code === code ? { ...s, dashboard_visible: visible } : s)))
+        setSuiteVisibility(code, visible).catch((e: Error) => {
+            setError(e.message)
+            // Roll back the optimistic update — the server did not persist it.
+            setSuites((prev) => prev.map((s) => (s.code === code ? { ...s, dashboard_visible: !visible } : s)))
+        })
+    }
 
     return (
         <div className="app" style={style}>
@@ -61,7 +74,11 @@ export default function App() {
 
             {!loading && suites.length > 0 ? (
                 <>
-                    <SuiteGrid suites={suites} selected={selected} onSelect={setSelected} />
+                    <div className="suite-toolbar">
+                        <SuiteSettings suites={suites} onToggle={handleToggleVisibility} />
+                    </div>
+
+                    <SuiteGrid suites={visibleSuites} selected={selected} onSelect={setSelected} />
 
                     <PeriodSelector
                         windows={meta?.windows ?? DEFAULT_WINDOWS}

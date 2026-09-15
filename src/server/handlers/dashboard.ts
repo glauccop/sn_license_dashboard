@@ -25,6 +25,26 @@ interface CategoryRow {
     source_job_status: string
 }
 
+interface RoleBreakdownRow {
+    role: string
+    application: string
+    role_type: string
+    allocated: number
+    active_365: number
+    reclaimable: number
+}
+
+/** True for per-role detail rows, which overlap each other and must never be summed into a total. */
+function isDetailRow(gr: any): boolean {
+    const value = gr.getValue('is_detail')
+    return value === '1' || value === 'true'
+}
+
+/** Defaults to visible: only an explicit false hides a suite's card. */
+function isVisible(value: string | null): boolean {
+    return value !== '0' && value !== 'false'
+}
+
 /** Field that carries this suite's headline number, given its unit of measure. */
 function valueField(unit: string): string {
     return unit === 'subscription_unit' ? 'su_count' : 'allocated_count'
@@ -70,6 +90,9 @@ function categoriesFor(suiteId: string, day: string): CategoryRow[] {
     snap.orderBy('category')
     snap.query()
     while (snap.next()) {
+        if (isDetailRow(snap)) {
+            continue // surfaced separately via /suites/{code}/roles, not part of the totals
+        }
         rows.push({
             category: snap.getValue('category') || '',
             su_count: toInt(snap.getValue('su_count')),
@@ -79,6 +102,40 @@ function categoriesFor(suiteId: string, day: string): CategoryRow[] {
             su_ratio: snap.getValue('su_ratio') || '',
             data_status: snap.getValue('data_status') || '',
             source_job_status: snap.getValue('source_job_status') || '',
+        })
+    }
+    return rows
+}
+
+/**
+ * Per-individual-role counts for a role-based suite (e.g. itil, itil_admin,
+ * sn_incident_write), read from the same day's detail rows. Not deduplicated
+ * against each other, so these do not sum to the suite's headline number —
+ * that figure comes from `categoriesFor`, which excludes these rows.
+ */
+function roleBreakdownFor(suiteId: string, day: string): RoleBreakdownRow[] {
+    const rows: RoleBreakdownRow[] = []
+    if (!day) {
+        return rows
+    }
+    const snap = new GlideRecord(SNAPSHOT)
+    snap.addQuery('suite', suiteId)
+    snap.addQuery('snapshot_date', day)
+    snap.orderByDesc('allocated_count')
+    snap.query()
+    while (snap.next()) {
+        if (!isDetailRow(snap)) {
+            continue
+        }
+        const allocated = toInt(snap.getValue('allocated_count'))
+        const active365 = toInt(snap.getValue('active_365_count'))
+        rows.push({
+            role: snap.getValue('category') || '',
+            application: snap.getValue('application_label') || '',
+            role_type: snap.getValue('role_type') || '',
+            allocated: allocated,
+            active_365: active365,
+            reclaimable: Math.max(0, allocated - active365),
         })
     }
     return rows
@@ -146,6 +203,7 @@ export function getSuites(request: any, response: any): void {
             unit: unit,
             counting_method: suite.getValue('counting_method'),
             collection_enabled: suite.getValue('collection_enabled') === '1',
+            dashboard_visible: isVisible(suite.getValue('dashboard_visible')),
             methodology: suite.getValue('methodology') || '',
             last_collected: day,
             consumption: consumption,
@@ -265,6 +323,81 @@ export function getMeta(request: any, response: any): void {
         windows: [7, 14, 30, 60, 90, 180, 240, 365],
         theme: instanceTheme(),
     })
+}
+
+/**
+ * GET /suites/{code}/roles — per-role breakdown for a role-based suite (e.g. itil,
+ * itil_admin, sn_incident_write), for the most recent collection day. Empty, not an
+ * error, for suites counted by another mechanism.
+ */
+export function getRoleBreakdown(request: any, response: any): void {
+    const code = request.pathParams.code
+
+    const suite = new GlideRecord(SUITE)
+    suite.addQuery('code', code)
+    suite.setLimit(1)
+    suite.query()
+    if (!suite.next()) {
+        response.setStatus(404)
+        response.setBody({ error: 'Unknown suite code: ' + code })
+        return
+    }
+
+    const suiteId = suite.getUniqueValue()
+    const day = latestSnapshotDate(suiteId)
+
+    response.setBody({
+        code: code,
+        name: suite.getValue('name'),
+        as_of: day,
+        roles: roleBreakdownFor(suiteId, day),
+    })
+}
+
+/** Body may already be parsed (`.data`) or arrive as a JSON string (`.dataString`). */
+function parseJsonBody(request: any): any {
+    if (request.body && typeof request.body.data === 'object' && request.body.data !== null) {
+        return request.body.data
+    }
+    const raw = request.body && request.body.dataString
+    if (!raw) {
+        return null
+    }
+    try {
+        return JSON.parse(raw)
+    } catch (e) {
+        return null
+    }
+}
+
+/**
+ * PUT /suites/{code}/visibility — show or hide a suite's card on the dashboard,
+ * independent of whether its collection is enabled. Body: {"visible": boolean}.
+ */
+export function setSuiteVisibility(request: any, response: any): void {
+    const code = request.pathParams.code
+    const body = parseJsonBody(request)
+
+    if (!body || typeof body.visible !== 'boolean') {
+        response.setStatus(400)
+        response.setBody({ error: 'Request body must be JSON with a boolean "visible" field.' })
+        return
+    }
+
+    const suite = new GlideRecord(SUITE)
+    suite.addQuery('code', code)
+    suite.setLimit(1)
+    suite.query()
+    if (!suite.next()) {
+        response.setStatus(404)
+        response.setBody({ error: 'Unknown suite code: ' + code })
+        return
+    }
+
+    suite.setValue('dashboard_visible', body.visible)
+    suite.update()
+
+    response.setBody({ code: code, dashboard_visible: body.visible })
 }
 
 function firstValue(param: string | string[] | undefined): string {

@@ -15,6 +15,7 @@ export interface Suite {
     unit: string
     counting_method: string
     collection_enabled: boolean
+    dashboard_visible: boolean
     methodology: string
     last_collected: string
     consumption: number
@@ -25,6 +26,22 @@ export interface Suite {
     overage: number
     data_status: string
     categories: CategoryRow[]
+}
+
+export interface RoleBreakdownRow {
+    role: string
+    application: string
+    role_type: string
+    allocated: number
+    active_365: number
+    reclaimable: number
+}
+
+export interface RoleBreakdown {
+    code: string
+    name: string
+    as_of: string
+    roles: RoleBreakdownRow[]
 }
 
 export interface TrendPoint {

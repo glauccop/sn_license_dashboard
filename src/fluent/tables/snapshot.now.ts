@@ -36,6 +36,16 @@ export const x_snc_lic_alloc_snapshot = Table({
             label: 'Role Type',
             maxLength: 40,
         }),
+        application_label: StringColumn({
+            label: 'Application',
+            maxLength: 120,
+            hint: 'Set on per-role detail rows only, mirroring the Role to Suite Mapping application grouping',
+        }),
+        is_detail: BooleanColumn({
+            label: 'Per-Role Detail',
+            default: false,
+            hint: 'True for individual-role breakdown rows, which are not deduplicated against each other and must be excluded when summing a suite total',
+        }),
         resource_count: IntegerColumn({
             label: 'Resource Count',
         }),

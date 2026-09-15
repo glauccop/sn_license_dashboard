@@ -97,6 +97,10 @@ declare global {
                         table: 'sys_ws_operation'
                         id: '56a5f73376ed44a89bc12f141f177151'
                     }
+                    'api-dashboard-roles': {
+                        table: 'sys_ws_operation'
+                        id: 'd30cde43ab6d4c25afa7398eb109c8c8'
+                    }
                     'api-dashboard-suites': {
                         table: 'sys_ws_operation'
                         id: '4e00736524d64b2796fe768d20e56d49'
@@ -108,6 +112,10 @@ declare global {
                     'api-dashboard-v1': {
                         table: 'sys_ws_version'
                         id: '24f7e9214e554cb08ee24bb1ba43e85f'
+                    }
+                    'api-dashboard-visibility': {
+                        table: 'sys_ws_operation'
+                        id: 'e568cfdb984d407780540cff88544ac7'
                     }
                     bom_json: {
                         table: 'sys_module'
@@ -813,6 +821,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '38feda67a83a4902859c074745b2186b'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'dashboard_visible'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '39b07ea22d1b4001b32cef7924cee69a'
                         key: {
@@ -987,6 +1004,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '57ffd4be2c6a40d680c0836cc12ffba3'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'application_label'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '59072cb869a84ddc9bbf5d2f34e94ffa'
                         key: {
@@ -1025,6 +1050,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '5d224dca35b844068c065839a9c67a20'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'is_detail'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '5f154ee524314d0280a77dbbcd93855d'
                         key: {
@@ -1055,6 +1089,15 @@ declare global {
                                     name: 'admin'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '61ad8b6d66ca434c947a72a1c71cf954'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'application_label'
+                            language: 'en'
                         }
                     },
                     {
@@ -1206,6 +1249,14 @@ declare global {
                         key: {
                             application_file: '2f1f24d137b74b1cbb5d52eabedcd365'
                             source_artifact: '815bfbb04baf4957a62895c9764eb753'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '7a29920eee3c41b5828c3e18fa101bbd'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'dashboard_visible'
                         }
                     },
                     {
@@ -2067,6 +2118,14 @@ declare global {
                             name: 'x_snc_lic_alloc_role_map'
                             element: 'suite'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'f6a345b7066e42d98b09379155477b09'
+                        key: {
+                            name: 'x_snc_lic_alloc_snapshot'
+                            element: 'is_detail'
                         }
                     },
                     {

@@ -1,6 +1,6 @@
 import '@servicenow/sdk/global'
 import { RestApi } from '@servicenow/sdk/core'
-import { getSuites, getTrend, getMeta } from '../../server/handlers/dashboard'
+import { getSuites, getTrend, getMeta, getRoleBreakdown, setSuiteVisibility } from '../../server/handlers/dashboard'
 import { dashboardApiAcl } from '../acl/rest.now'
 
 RestApi({
@@ -41,6 +41,26 @@ RestApi({
             path: '/meta',
             shortDescription: 'Disclaimer text, available windows and collection freshness.',
             script: getMeta,
+            enforceAcl: [dashboardApiAcl],
+        },
+        {
+            $id: Now.ID['api-dashboard-roles'],
+            name: 'roles',
+            method: 'GET',
+            version: 1,
+            path: '/suites/{code}/roles',
+            shortDescription: 'Per-role breakdown for a role-based suite (itil, itil_admin, etc).',
+            script: getRoleBreakdown,
+            enforceAcl: [dashboardApiAcl],
+        },
+        {
+            $id: Now.ID['api-dashboard-visibility'],
+            name: 'visibility',
+            method: 'PUT',
+            version: 1,
+            path: '/suites/{code}/visibility',
+            shortDescription: 'Show or hide a suite card on the dashboard.',
+            script: setSuiteVisibility,
             enforceAcl: [dashboardApiAcl],
         },
     ],

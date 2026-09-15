@@ -48,6 +48,11 @@ export const x_snc_lic_alloc_suite = Table({
             label: 'Collection Enabled',
             default: false,
         }),
+        dashboard_visible: BooleanColumn({
+            label: 'Visible on Dashboard',
+            default: true,
+            hint: 'Hides the card from the dashboard grid without affecting collection — for a suite that is correctly collecting a zero or not-applicable result',
+        }),
         methodology: MultiLineTextColumn({
             label: 'Methodology',
             maxLength: 1000,
