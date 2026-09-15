@@ -1,0 +1,7 @@
+{
+    "scope": "x_snc_lic_alloc",
+    "scopeId": "07305aad6f904d17aa0477398a6dc02d",
+    "name": "License Allocation Dashboard",
+    "tsconfigPath": "./src/server/tsconfig.json",
+    "packageSourceCodeOnInstance": true
+}
