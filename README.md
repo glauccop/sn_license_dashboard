@@ -112,10 +112,15 @@ These are expected, and are the reason for the disclaimer:
 Built with the ServiceNow SDK (Fluent) and a React front end on a UI Page.
 
 ```bash
+git clone https://github.com/glauccop/sn_license_dashboard.git
+cd sn_license_dashboard
 npm install
+now-sdk auth --add <your-instance> --type basic
 npm run build
 npm run deploy
 ```
+
+`now-sdk deploy` installs (or upgrades) the app directly on whichever instance you authenticated against — there is no update set or XML to import by hand.
 
 Source layout:
 
@@ -126,3 +131,17 @@ src/client/     the React dashboard
 ```
 
 Customer usage reports and any other customer data belong in `reference-data/`, which is git-ignored. Do not commit them.
+
+## Support & Contributing
+
+Found a bug, have a question, or want a product added to "How it counts"? [Open an issue](https://github.com/glauccop/sn_license_dashboard/issues).
+
+Contributions are welcome as pull requests. A couple of things that make a PR easier to review, given how this app is built:
+
+- Metadata (`src/fluent/**/*.now.ts`) is Fluent — literal values only. The compiler rejects computed values, array indexing, and loops inside a `Record()`/builder call (`now-sdk build` will tell you immediately if you hit this).
+- New licensed products go in `src/fluent/seed/sources.now.ts` as a new `Metric Source` row (table, field names, ratio) when the product already publishes its own subscription-unit counts — that's a data change, not a code change. A `counting_method` you haven't seen before is the only reason to touch `LicenseUsageCollector.server.js`.
+- Run `npm run build` before opening a PR; it type-checks the whole app and catches most Fluent-specific mistakes.
+
+## License
+
+[MIT](LICENSE)

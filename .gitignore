@@ -5,6 +5,7 @@ node_modules/
 target/
 *.tsbuildinfo
 .jest_cache
+.claude/
 
 # Customer data — never commit. Usage Reports contain per-user detail rows
 # (federated IDs, last login times) and customer contract quantities.
