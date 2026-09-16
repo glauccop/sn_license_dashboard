@@ -1,5 +1,7 @@
 # License Allocation Dashboard
 
+*[Leia em português](README.pt-br.md)*
+
 A scoped ServiceNow application that collects **license allocation on this instance once a day** and shows how it moves over time, per product suite, with the counting method visible next to every number.
 
 > **This is not ServiceNow's official license measurement.** Official consumption is measured by ServiceNow through its own metering mechanisms, which may apply different criteria, measurement windows, and counting rules. Treat this dashboard as an internal tracking reference, not as a compliance position.
@@ -8,6 +10,12 @@ A scoped ServiceNow application that collects **license allocation on this insta
 
 ServiceNow reports license consumption to customers periodically, as a point-in-time document. Nothing on the instance keeps a history of it, so questions like *"was this suite already over entitlement three months ago, or did it just happen?"* have no answer locally. This application answers that by taking its own daily snapshot and keeping it.
 
+## Screenshots
+
+The dashboard rendering in Brazilian Portuguese, one suite card per suite, with the trend chart and the suite detail sitting side by side below the cards:
+
+![Dashboard overview, ITSM suite selected](docs/images/dashboard-itsm-overview.png)
+
 ## How it counts
 
 There are two mechanisms, and the dashboard always says which one produced a number.
@@ -15,6 +23,8 @@ There are two mechanisms, and the dashboard always says which one produced a num
 **1. Counts the products publish themselves.** Most licensing-aware products already write their own resource counts, contractual ratios and computed subscription units into a table on the instance — for example `itom_lu_ci_counts` for ITOM and `itam_licensing_resource_counts` for SAM and HAM. This application **reads and sums those published values**. It does not reimplement any contractual ratio, which matters because those ratios differ per product and change between SKU vintages.
 
 Each product is described by a row in **Metric Sources**, so supporting a new product is a configuration change rather than a code change.
+
+![Hardware Asset Management detail, showing the per-category resource counts and ratios published by the product itself](docs/images/dashboard-ham-native-counts.png)
 
 **2. Counts distinct users holding mapped roles.** ITSM, SPM, FSM, and CSM have no such published table, so allocation is counted from `sys_user_has_role`. Two figures are recorded:
 
@@ -29,7 +39,11 @@ A user holding several mapped roles of the same suite counts **once** — alloca
 
 Opening a role-based suite on the dashboard also shows a **By role** breakdown (e.g. `itil`, `sn_incident_write`, `sn_change_read`). These rows are deliberately not deduplicated against other roles of the same type — a user holding two mapped Fulfiller roles appears under both, matching how the source usage report itself breaks out consumption per role. A Business Stakeholder role is the exception: it excludes anyone already counted as a Fulfiller above, for the same mutual-exclusion reason as the summary.
 
+![Strategic Portfolio Management detail, showing the By role breakdown](docs/images/dashboard-spm-by-role.png)
+
 Security Incident Response has no product-published licensing table on this instance, so it is counted by role like ITSM and SPM — even though its own SKU is contracted as Unrestricted User (every active user, regardless of role). The dashboard shows the narrower, role-based figure and says so in its methodology text, since it is far more informative than "every active user in the instance."
+
+![Security Incident Response detail, explaining why the role-based figure is shown instead of Unrestricted User](docs/images/dashboard-sir-methodology.png)
 
 Customer Service Management is also role-based, but with a deliberate omission: its external, self-service personas (Customer, Consumer, Partner, and similar contact-facing roles) are not mapped, because those are not Fulfiller/Business Stakeholder seats at all — ServiceNow measures their usage separately as CSM portal visits, a capacity metric this dashboard does not track. Only agent- and case-management-facing roles count here.
 
