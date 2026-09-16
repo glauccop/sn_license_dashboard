@@ -96,8 +96,10 @@ export default function App() {
                         t={t}
                     />
 
-                    {trend ? <TrendChart trend={trend} t={t} /> : null}
-                    {activeSuite ? <SuiteDetail suite={activeSuite} t={t} /> : null}
+                    <div className="chart-detail-row">
+                        {trend ? <TrendChart trend={trend} t={t} /> : null}
+                        {activeSuite ? <SuiteDetail suite={activeSuite} t={t} /> : null}
+                    </div>
                 </>
             ) : null}
         </div>

@@ -36,7 +36,13 @@ export default function TrendChart({ trend, t }: Props) {
 
     const ticks = [0, 0.5, 1].map((fraction) => Math.round(ceiling * fraction))
     const labelEvery = Math.max(1, Math.ceil(points.length / 8))
-    const active = hover != null ? points[hover] : null
+
+    // Defaults to the most recent day so the current value and its delta are
+    // visible without needing to hover; hovering just lets you inspect another day.
+    const activeIndex = hover != null ? hover : points.length - 1
+    const active = points[activeIndex]
+    const previous = activeIndex > 0 ? points[activeIndex - 1] : null
+    const delta = previous ? active.value - previous.value : null
 
     return (
         <div className="chart">
@@ -101,21 +107,15 @@ export default function TrendChart({ trend, t }: Props) {
             </svg>
 
             <div className="chart-readout">
-                {active ? (
-                    <>
-                        <strong>{active.date}</strong>
-                        <span>
-                            {active.value.toLocaleString()} {t.units[trend.unit] ?? trend.unit}
-                        </span>
-                        {active.allocated > 0 ? (
-                            <span>
-                                {t.chartAllocatedNote(active.allocated.toLocaleString(), active.active_365.toLocaleString())}
-                            </span>
-                        ) : null}
-                    </>
-                ) : (
-                    <span className="is-muted">{t.chartReadoutRange(points.length, trend.from, trend.to)}</span>
-                )}
+                <strong>{active.date}</strong>
+                <span>
+                    {active.value.toLocaleString()} {t.units[trend.unit] ?? trend.unit}
+                </span>
+                <span>{delta != null ? t.chartDelta(delta) : t.chartNoPreviousDay}</span>
+                {active.allocated > 0 ? (
+                    <span>{t.chartAllocatedNote(active.allocated.toLocaleString(), active.active_365.toLocaleString())}</span>
+                ) : null}
+                <span className="is-muted">{t.chartReadoutRange(points.length, trend.from, trend.to)}</span>
             </div>
         </div>
     )

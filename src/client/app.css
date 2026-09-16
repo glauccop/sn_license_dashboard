@@ -410,7 +410,19 @@ body {
     cursor: default;
 }
 
-/* -------------------------------------------------------------- the chart */
+/* --------------------------------------------------------- chart + detail */
+
+.chart-detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.chart-detail-row > * {
+    flex: 1 1 420px;
+    min-width: 0;
+}
 
 .chart,
 .detail {

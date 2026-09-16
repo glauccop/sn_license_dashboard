@@ -25,6 +25,8 @@ export interface Strings {
     chartEntitled: string
     chartAllocatedNote: (allocated: string, active365: string) => string
     chartReadoutRange: (count: number, from: string, to: string) => string
+    chartDelta: (delta: number) => string
+    chartNoPreviousDay: string
 
     howCounted: string
     roleTypeHeader: string
@@ -82,6 +84,8 @@ const EN: Strings = {
     chartAllocatedNote: (allocated, active365) => allocated + ' allocated · ' + active365 + ' with a login in 365 days',
     chartReadoutRange: (count, from, to) =>
         count + ' daily collection' + (count === 1 ? '' : 's') + ' between ' + from + ' and ' + to,
+    chartDelta: (delta) => (delta >= 0 ? '+' : '') + delta.toLocaleString() + ' since the previous collection',
+    chartNoPreviousDay: 'No earlier collection to compare against',
 
     howCounted: 'How this is counted',
     roleTypeHeader: 'Role type',
@@ -155,6 +159,8 @@ const PB: Strings = {
     chartAllocatedNote: (allocated, active365) => allocated + ' alocado(s) · ' + active365 + ' com login em 365 dias',
     chartReadoutRange: (count, from, to) =>
         count + ' coleta' + (count === 1 ? '' : 's') + ' diária' + (count === 1 ? '' : 's') + ' entre ' + from + ' e ' + to,
+    chartDelta: (delta) => (delta >= 0 ? '+' : '') + delta.toLocaleString() + ' desde a coleta anterior',
+    chartNoPreviousDay: 'Sem coleta anterior para comparar',
 
     howCounted: 'Como isto é contado',
     roleTypeHeader: 'Tipo de role',
