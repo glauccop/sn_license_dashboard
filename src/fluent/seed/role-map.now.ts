@@ -1,6 +1,6 @@
 import '@servicenow/sdk/global'
 import { Record } from '@servicenow/sdk/core'
-import { suiteItsm, suiteSpm, suiteSir } from './suites.now'
+import { suiteItsm, suiteSpm, suiteSir, suiteFsm, suiteCsm } from './suites.now'
 
 /**
  * Default mapping of base ServiceNow roles to suites, so a fresh install has
@@ -9,6 +9,9 @@ import { suiteItsm, suiteSpm, suiteSir } from './suites.now'
  * left for the admin to add through the Role to Suite Mapping list.
  */
 const FIRST_INSTALL = { installMethod: 'first install' as const }
+
+/** For mappings added after the app is already installed — see suites.now.ts. */
+const ONCE = { installMethod: 'once' as const }
 
 // ---------------------------------------------------------------- ITSM · Fulfiller
 
@@ -516,3 +519,492 @@ Record({
         active: true,
     },
 })
+
+// ----------------------------------------------------------------- FSM · Fulfiller
+
+Record({
+    $id: Now.ID['rm-fsm-wm-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_agent',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-dispatcher'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_dispatcher',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-manager'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_manager',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-admin'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_admin',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-task-initiator'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_task_initiator',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-crew-moderator'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_crew_moderator',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-servicedesk-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_servicedesk_agent',
+        application_label: 'Field Service',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-capacity-write'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_capacity_mg.wm_capacity_write',
+        application_label: 'Capacity Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-quality-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_quality.wm_quality_agent',
+        application_label: 'Quality Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-technician-sales-write'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_tech_sales.wm_technician_sales_write',
+        application_label: 'Technician Sales',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-service-location-write'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_service_loc.wm_service_location_write',
+        application_label: 'Service Location Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-territory-manager'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_tp.fsm_territory_manager',
+        application_label: 'Territory Planning',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-territory-planner'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_tp.fsm_territory_planner',
+        application_label: 'Territory Planning',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-planned-work-admin'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_planned_wm.planned_work_admin',
+        application_label: 'Planned Maintenance',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+// ------------------------------------------------------- FSM · Business Stakeholder
+
+Record({
+    $id: Now.ID['rm-fsm-wm-basic'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_basic',
+        application_label: 'Field Service',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-read'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_read',
+        application_label: 'Field Service',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-initiator'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_initiator',
+        application_label: 'Field Service',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-qualifier'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_qualifier',
+        application_label: 'Field Service',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-wm-approver'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'wm_approver_user',
+        application_label: 'Field Service',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-capacity-read'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_capacity_mg.wm_capacity_read',
+        application_label: 'Capacity Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-territory-read'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_tp.fsm_territory_read',
+        application_label: 'Territory Planning',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-fsm-planned-work-read'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteFsm,
+        role: 'sn_fsm_planned_wm.planned_work_read',
+        application_label: 'Planned Maintenance',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+// ----------------------------------------------------------------- CSM · Fulfiller
+
+Record({
+    $id: Now.ID['rm-csm-manager'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice_manager',
+        application_label: 'Case Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice_agent',
+        application_label: 'Case Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-case-admin'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.case_admin',
+        application_label: 'Case Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-case-task-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.case_task_agent',
+        application_label: 'Case Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-relationship-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.relationship_agent',
+        application_label: 'Contact & Relationship Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-contact-manager'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.contact_manager',
+        application_label: 'Contact & Relationship Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-svc-location-agent'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.svc_location_agent',
+        application_label: 'Service Location Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-svc-location-manager'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.svc_location_manager',
+        application_label: 'Service Location Management',
+        role_type: 'fulfiller',
+        source: 'default',
+        active: true,
+    },
+})
+
+// ------------------------------------------------------- CSM · Business Stakeholder
+//
+// External/self-service personas (sn_customerservice.customer, .consumer_contributor,
+// .unified_consumer, .self_contributor, .partner, .case_authorized_consumer/contact and
+// similar contact-facing roles) are deliberately not mapped — see suites.now.ts.
+
+Record({
+    $id: Now.ID['rm-csm-case-viewer'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.case_viewer',
+        application_label: 'Case Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-case-read-granular'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.case_read_granular',
+        application_label: 'Case Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-requester'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.requester',
+        application_label: 'Case Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+
+Record({
+    $id: Now.ID['rm-csm-case-contributor-viewer'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_role_map',
+    data: {
+        suite: suiteCsm,
+        role: 'sn_customerservice.case_contributor_viewer',
+        application_label: 'Case Management',
+        role_type: 'business_stakeholder',
+        source: 'default',
+        active: true,
+    },
+})
+

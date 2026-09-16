@@ -117,6 +117,7 @@ const EN: Strings = {
         unrestricted_user: 'active users',
         device: 'devices',
         unattended_robot: 'unattended robots',
+        assist: 'assists',
         not_countable: 'not countable',
     },
     status: {
@@ -190,6 +191,7 @@ const PB: Strings = {
         unrestricted_user: 'usuários ativos',
         device: 'dispositivos',
         unattended_robot: 'robôs não assistidos',
+        assist: 'assists',
         not_countable: 'não contável',
     },
     status: {

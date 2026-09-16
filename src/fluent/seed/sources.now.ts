@@ -1,6 +1,6 @@
 import '@servicenow/sdk/global'
 import { Record } from '@servicenow/sdk/core'
-import { suiteItomVisibility, suiteSam, suiteHam, suiteRpa, suiteVr } from './suites.now'
+import { suiteItomVisibility, suiteSam, suiteHam, suiteRpa, suiteVr, suiteNowAssist } from './suites.now'
 
 /**
  * Reader configuration for the licensing counts each product already publishes.
@@ -8,6 +8,9 @@ import { suiteItomVisibility, suiteSam, suiteHam, suiteRpa, suiteVr } from './su
  * installed simply reports 'Source table not present' and is skipped.
  */
 const FIRST_INSTALL = { installMethod: 'first install' as const }
+
+/** For sources added after the app is already installed — see suites.now.ts. */
+const ONCE = { installMethod: 'once' as const }
 
 Record({
     $id: Now.ID['source-itom-visibility'],
@@ -105,7 +108,26 @@ Record({
     },
 })
 
+Record({
+    $id: Now.ID['source-now-assist'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_source',
+    data: {
+        suite: suiteNowAssist,
+        label: 'Now Assist consumption',
+        source_table: 'sn_entitlement_genai_assist_analytics',
+        su_field: 'total_assists',
+        date_field: 'last_sync',
+        value_basis: 'subscription_units',
+        active: true,
+    },
+})
+
 // SIR has no licensing/usage table of its own on this instance — the table
 // that superficially looked like a fit (sn_irm_shared_cmn_aggregated_usage_count)
 // is GRC/IRM/PRM/BCM user-role licensing and has no Security Incident Response
 // family. SIR is counted by role instead — see role-map.now.ts.
+//
+// Now Assist's table (sn_entitlement_genai_assist_analytics) has no category or
+// ratio column — it's one account-level row per sync, not a breakdown — so
+// category_field/ratio_field/product_field are deliberately left unset above.

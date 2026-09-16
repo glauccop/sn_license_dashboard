@@ -157,6 +157,10 @@ declare global {
                         table: 'sys_module'
                         id: '46156092f97948138b9a74bb23784a6f'
                     }
+                    'privilege-now-assist-analytics-read': {
+                        table: 'sys_scope_privilege'
+                        id: '67d4f6d916234cf39b9f194c2aa0d3aa'
+                    }
                     'property-pb-dictionary-seeded': {
                         table: 'sys_properties'
                         id: 'bfda9f828b3544cab6466eb26fd71151'
@@ -169,6 +173,142 @@ declare global {
                     'property-theme-primary': {
                         table: 'sys_properties'
                         id: 'b3ad2ce052b34f9e9359deb3f6b40d62'
+                    }
+                    'rm-csm-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'c8805e96f8e94371a448c1a83dfee854'
+                    }
+                    'rm-csm-case-admin': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '207cb29fea0f43528f2e431a536bc471'
+                    }
+                    'rm-csm-case-contributor-viewer': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '011bd875da1c4aee97a3e3e2f015ddfa'
+                    }
+                    'rm-csm-case-read-granular': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '1f4bad4514c24aceace6819111f6a69f'
+                    }
+                    'rm-csm-case-task-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '82318208e848448ead987c7bb3b44127'
+                    }
+                    'rm-csm-case-viewer': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '91f408ecc2c5474489ccc320ad2f871d'
+                    }
+                    'rm-csm-contact-manager': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '02f9c139c401480a9968cf4f92d0c499'
+                    }
+                    'rm-csm-manager': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '08f76c7ac99c4e92a68732e905d74b01'
+                    }
+                    'rm-csm-relationship-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'dd6a882aa1c24a00bc4adbd1f432db4b'
+                    }
+                    'rm-csm-requester': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '013e76f099f24620b7d13ff083fa7a3b'
+                    }
+                    'rm-csm-svc-location-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'cb77d4fee2c24b0b8b08451265506ee9'
+                    }
+                    'rm-csm-svc-location-manager': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '12182140ae334e8f98aefe38313d445c'
+                    }
+                    'rm-fsm-capacity-read': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '145bc0cfb69744f8b9e1111b4e2f2346'
+                    }
+                    'rm-fsm-capacity-write': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '9f3df38aeac24717991937fc26e28900'
+                    }
+                    'rm-fsm-planned-work-admin': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '4d175f8886c348c381a7268801a9210f'
+                    }
+                    'rm-fsm-planned-work-read': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '741640929868404fac87e52999011c0a'
+                    }
+                    'rm-fsm-quality-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'a7adce3934aa410a9f734988d45ebff6'
+                    }
+                    'rm-fsm-service-location-write': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '2c39630f8867428f917ec42ca3d7ef39'
+                    }
+                    'rm-fsm-servicedesk-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '62ca859ad81f4f1baa494095086ec542'
+                    }
+                    'rm-fsm-technician-sales-write': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '1ba6252f084648019899279933f900d2'
+                    }
+                    'rm-fsm-territory-manager': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'db9f16f8fa75490a9f685f7d21b957fc'
+                    }
+                    'rm-fsm-territory-planner': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '45121cc3170d4617b7375dc6149e5e2e'
+                    }
+                    'rm-fsm-territory-read': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '2ef7617805fa4870af7be4b225ebcf18'
+                    }
+                    'rm-fsm-wm-admin': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'b216c3eea9254dcdbb925cdee00ec2a2'
+                    }
+                    'rm-fsm-wm-agent': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '6ae110d526b041f4856d53822bc87525'
+                    }
+                    'rm-fsm-wm-approver': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '82130161c75c47e4bb8cc2c1ca576b7d'
+                    }
+                    'rm-fsm-wm-basic': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'a5f8cc9281774072af54ce999e09ee1a'
+                    }
+                    'rm-fsm-wm-crew-moderator': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '382e989860584d79b33ecf6734d940d7'
+                    }
+                    'rm-fsm-wm-dispatcher': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '4f6c89c3f5904f489532fa6fad9b5ac3'
+                    }
+                    'rm-fsm-wm-initiator': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '384e738e778c4e61bdf4d2d81f8a0426'
+                    }
+                    'rm-fsm-wm-manager': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'a1eb945df0444bdcb9bb1e2dcbef20e3'
+                    }
+                    'rm-fsm-wm-qualifier': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: 'e13e93c82a2144ed8786504dd7fd2ee8'
+                    }
+                    'rm-fsm-wm-read': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '257eff148261478cbf0f96547dfbeebe'
+                    }
+                    'rm-fsm-wm-task-initiator': {
+                        table: 'x_snc_lic_alloc_role_map'
+                        id: '35dbbbfd91f045b2be7d62e1dca434fe'
                     }
                     'rm-itsm-change-manager': {
                         table: 'x_snc_lic_alloc_role_map'
@@ -327,6 +467,10 @@ declare global {
                         table: 'x_snc_lic_alloc_source'
                         id: '66869593c59447449503af23f288a603'
                     }
+                    'source-now-assist': {
+                        table: 'x_snc_lic_alloc_source'
+                        id: '36e2448482f54e4a94554dc50d7560ed'
+                    }
                     'source-rpa': {
                         table: 'x_snc_lic_alloc_source'
                         id: 'e4d3191a206d4f358e3e3b583cd90058'
@@ -361,6 +505,14 @@ declare global {
                         table: 'x_snc_lic_alloc_suite'
                         id: '9aaaae008e7a4c01be3f64f110713d05'
                     }
+                    'suite-csm': {
+                        table: 'x_snc_lic_alloc_suite'
+                        id: '77f115a9b0e44e058d7e7afd89ac1f8f'
+                    }
+                    'suite-fsm': {
+                        table: 'x_snc_lic_alloc_suite'
+                        id: 'f0b213ab2dd2463ca735d796d9276f58'
+                    }
                     'suite-ham': {
                         table: 'x_snc_lic_alloc_suite'
                         id: '71d4a541cb80421aa96c987c0b28caa0'
@@ -372,6 +524,10 @@ declare global {
                     'suite-itsm': {
                         table: 'x_snc_lic_alloc_suite'
                         id: '34aee951b885485ea16898c44e893352'
+                    }
+                    'suite-now-assist': {
+                        table: 'x_snc_lic_alloc_suite'
+                        id: '6e52130e7d9b4f04abffccae55664bda'
                     }
                     'suite-rpa': {
                         table: 'x_snc_lic_alloc_suite'
@@ -2842,6 +2998,17 @@ declare global {
                             element: 'value_basis'
                             value: 'subscription_units'
                             language: 'pb'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'd6c1a7c580844b1fae3e42173d1e65a8'
+                        key: {
+                            name: 'x_snc_lic_alloc_suite'
+                            element: 'unit'
+                            value: 'assist'
+                            language: 'en'
                             dependent_value: 'NULL'
                         }
                     },

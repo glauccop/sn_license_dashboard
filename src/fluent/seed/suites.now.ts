@@ -8,6 +8,13 @@ import { Record } from '@servicenow/sdk/core'
  */
 const FIRST_INSTALL = { installMethod: 'first install' as const }
 
+/**
+ * For records added in a later version, after the app is already installed on
+ * an instance — 'first install' only loads when the app itself is installed
+ * for the very first time, so it would never apply to these on an upgrade.
+ */
+const ONCE = { installMethod: 'once' as const }
+
 export const suiteItsm = Record({
     $id: Now.ID['suite-itsm'],
     $meta: FIRST_INSTALL,
@@ -175,5 +182,56 @@ export const suiteAppEngine = Record({
         active: true,
         methodology:
             'No on-instance consumption figure. App Engine attach SKUs are priced as a percentage of net spend, which is not a countable quantity. Only the recorded entitlement is shown.',
+    },
+})
+
+export const suiteFsm = Record({
+    $id: Now.ID['suite-fsm'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_suite',
+    data: {
+        code: 'fsm',
+        name: 'Field Service Management',
+        unit: 'fulfiller_user',
+        counting_method: 'role_based',
+        collection_enabled: true,
+        display_order: 110,
+        active: true,
+        methodology:
+            'Distinct users holding any Work Management or Field Service Management role mapped to this suite on the collection date. Same Fulfiller/Business Stakeholder rule as ITSM and SPM: a user holding both counts only as a Fulfiller.',
+    },
+})
+
+export const suiteCsm = Record({
+    $id: Now.ID['suite-csm'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_suite',
+    data: {
+        code: 'csm',
+        name: 'Customer Service Management',
+        unit: 'fulfiller_user',
+        counting_method: 'role_based',
+        collection_enabled: true,
+        display_order: 120,
+        active: true,
+        methodology:
+            'Distinct users holding any CSM agent or case-management role mapped to this suite on the collection date. External, self-service personas (Customer, Consumer, Partner, and similar contact-facing roles) are deliberately not mapped — those are not Fulfiller/Business Stakeholder seats, and their usage is measured by ServiceNow separately as CSM portal visits, a capacity metric this dashboard does not track.',
+    },
+})
+
+export const suiteNowAssist = Record({
+    $id: Now.ID['suite-now-assist'],
+    $meta: ONCE,
+    table: 'x_snc_lic_alloc_suite',
+    data: {
+        code: 'now_assist',
+        name: 'Now Assist',
+        unit: 'assist',
+        counting_method: 'native_counts',
+        collection_enabled: true,
+        display_order: 130,
+        active: true,
+        methodology:
+            'Total assists consumed, read directly from sn_entitlement_genai_assist_analytics, which Now Assist publishes itself. An assist is consumed per skill action, weighted by that skill’s own assist ratio — a summary can cost one assist, a multi-step agentic workflow can cost 25 or more. This is an account-level consumption figure, not a per-user count, and it accumulates across the current annual contract cycle rather than resetting daily.',
     },
 })

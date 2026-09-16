@@ -29,6 +29,7 @@ export const x_snc_lic_alloc_suite = Table({
                 unrestricted_user: 'Unrestricted User',
                 device: 'Device',
                 unattended_robot: 'Unattended Robot',
+                assist: 'Assist',
                 not_countable: 'Not Countable',
             },
         }),

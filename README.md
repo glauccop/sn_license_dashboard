@@ -16,7 +16,7 @@ There are two mechanisms, and the dashboard always says which one produced a num
 
 Each product is described by a row in **Metric Sources**, so supporting a new product is a configuration change rather than a code change.
 
-**2. Counts distinct users holding mapped roles.** ITSM and SPM have no such published table, so allocation is counted from `sys_user_has_role`. Two figures are recorded:
+**2. Counts distinct users holding mapped roles.** ITSM, SPM, FSM, and CSM have no such published table, so allocation is counted from `sys_user_has_role`. Two figures are recorded:
 
 | Figure | Meaning |
 |---|---|
@@ -31,9 +31,13 @@ Opening a role-based suite on the dashboard also shows a **By role** breakdown (
 
 Security Incident Response has no product-published licensing table on this instance, so it is counted by role like ITSM and SPM — even though its own SKU is contracted as Unrestricted User (every active user, regardless of role). The dashboard shows the narrower, role-based figure and says so in its methodology text, since it is far more informative than "every active user in the instance."
 
+Customer Service Management is also role-based, but with a deliberate omission: its external, self-service personas (Customer, Consumer, Partner, and similar contact-facing roles) are not mapped, because those are not Fulfiller/Business Stakeholder seats at all — ServiceNow measures their usage separately as CSM portal visits, a capacity metric this dashboard does not track. Only agent- and case-management-facing roles count here.
+
+**3. Account-level consumption.** Now Assist doesn't fit either mechanism above — it isn't measured per user, and there's no per-category breakdown to sum. ServiceNow publishes a single running total of **assists** consumed (an assist is a unit of Now Assist skill usage, weighted by that skill's complexity) in `sn_entitlement_genai_assist_analytics`, which accumulates across the current annual contract cycle. This application reads that table the same way it reads ITOM's or SAM's — through **Metric Sources**, no special-cased code — it just happens to be a single account-wide row instead of one row per category.
+
 ## What ships, and what does not
 
-Shipped: the suite catalogue, metric source configuration for the products above, and a default mapping of base ServiceNow ITSM and SPM roles.
+Shipped: the suite catalogue (ITSM, SPM, ITOM Visibility, SAM, HAM, Unrestricted Users, RPA, Vulnerability Response, SIR, App Engine, Field Service Management, Customer Service Management, and Now Assist), metric source configuration for the products above, and a default mapping of base ServiceNow roles for every role-based suite.
 
 **Entitlements ship empty.** Contract quantities are specific to your subscription, so enter them under **Entitlements** from your own documents. Without them the dashboard still shows consumption, just with nothing to compare it against.
 
@@ -81,6 +85,8 @@ Adding another language means extending `Lang`/`STRINGS` in `src/client/i18n.ts`
 
 The collector reads tables owned by other applications. If a product's licensing table is restricted to its own scope, the collector records `Source not present` or a collection error for that suite instead of failing, and the instance may ask an administrator to approve cross-scope access. Nothing else stops working when one source is unavailable.
 
+Now Assist's usage table (`sn_entitlement_genai_assist_analytics`) is more tightly protected than the others — a scoped app needs an explicit read grant, not just the platform's usual auto-approval, or the collector fails with `ScopeAccessNotGrantedException`. This app ships that grant (`src/fluent/acl/cross-scope.now.ts`), so it should work out of the box; if a hardened instance still blocks it, an administrator can approve cross-scope access to that table from **System Applications → Studio → Cross-Scope Access**.
+
 ## Navigation
 
 | Module | Purpose |
@@ -105,6 +111,8 @@ These are expected, and are the reason for the disclaimer:
 - **Role inheritance** is counted here whenever a user effectively holds a mapped role. How ServiceNow treats inherited roles in its own counting is not publicly documented.
 - **App Engine** attach SKUs are priced as a percentage of net spend, which is not a countable quantity, so no consumption figure is produced.
 - **Security Incident Response** is contracted as Unrestricted User (every active user of the instance), but shown here as role-based allocation — a much narrower and more useful figure. See "How it counts" above.
+- **Customer Service Management** external/self-service roles are excluded from the count by design — see "How it counts" above.
+- **Now Assist** assists accumulate across the current annual contract cycle rather than resetting daily, so the trend chart shows a rising line even on a day with no incremental usage recorded — that's the running total, not new consumption.
 - Final reconciliation of any subscription happens on ServiceNow's side, not on the instance.
 
 ## Development

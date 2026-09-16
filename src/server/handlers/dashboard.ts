@@ -90,6 +90,20 @@ const SUITE_TEXT_PB: Record<string, { name?: string; methodology: string }> = {
         methodology:
             'Nenhuma figura de consumo on-instance. As SKUs de attach do App Engine são precificadas como um percentual do gasto líquido, o que não é uma quantidade contável. Apenas a entitlement registrada é exibida.',
     },
+    fsm: {
+        name: 'Gestão de Serviços de Campo',
+        methodology:
+            'Usuários distintos que possuem qualquer role de Work Management ou Field Service Management mapeada para esta suíte na data da coleta. Mesma regra de Fulfiller/Business Stakeholder do ITSM e do SPM: um usuário que tem os dois é contado apenas como fulfiller.',
+    },
+    csm: {
+        name: 'Gestão de Atendimento ao Cliente',
+        methodology:
+            'Usuários distintos que possuem qualquer role de agente ou gestão de caso do CSM mapeada para esta suíte na data da coleta. Personas externas e de autoatendimento (Customer, Consumer, Partner e roles similares de contato) são deliberadamente não mapeadas — não são assentos de Fulfiller/Business Stakeholder, e seu uso é medido pela ServiceNow separadamente como visitas ao portal do CSM, uma métrica de capacidade que este painel não acompanha.',
+    },
+    now_assist: {
+        methodology:
+            'Total de assists consumidos, lido diretamente de sn_entitlement_genai_assist_analytics, que o próprio Now Assist publica. Um assist é consumido por ação de skill, ponderado pela proporção de assist daquela skill — um resumo pode custar um assist, um fluxo de trabalho agentivo de várias etapas pode custar 25 ou mais. É uma figura de consumo em nível de conta, não uma contagem por usuário, e acumula durante o ciclo contratual anual em vez de reiniciar diariamente.',
+    },
 }
 
 const APPLICATION_LABEL_PB: Record<string, string> = {
@@ -103,11 +117,21 @@ const APPLICATION_LABEL_PB: Record<string, string> = {
     'Resource Management': 'Gestão de Recursos',
     Global: 'Global',
     'Security Incident Response': 'Resposta a Incidentes de Segurança',
+    'Field Service': 'Serviço de Campo',
+    'Capacity Management': 'Gestão de Capacidade',
+    'Quality Management': 'Gestão de Qualidade',
+    'Technician Sales': 'Vendas por Técnico',
+    'Service Location Management': 'Gestão de Local de Serviço',
+    'Territory Planning': 'Planejamento de Território',
+    'Planned Maintenance': 'Manutenção Planejada',
+    'Case Management': 'Gestão de Casos',
+    'Contact & Relationship Management': 'Gestão de Contatos e Relacionamento',
 }
 
 /** Only the source labels that can surface as a category name — see categoriesFor(). */
 const SOURCE_LABEL_PB: Record<string, string> = {
     'Unattended robots utilized': 'Robôs não assistidos utilizados',
+    'Now Assist consumption': 'Consumo do Now Assist',
 }
 
 interface CategoryRow {
@@ -141,9 +165,32 @@ function isVisible(value: string | null): boolean {
     return value !== '0' && value !== 'false'
 }
 
-/** Field that carries this suite's headline number, given its unit of measure. */
+/**
+ * Field that carries this suite's headline number, given its unit of measure.
+ * Fulfiller/user-style units come from role-based or unrestricted counting
+ * (allocated_count); everything else is native-counts, and is either a raw
+ * resource count (Device, Unattended Robot) or already-computed subscription
+ * units (Subscription Unit, Assist).
+ */
 function valueField(unit: string): string {
-    return unit === 'subscription_unit' ? 'su_count' : 'allocated_count'
+    if (unit === 'fulfiller_user' || unit === 'user' || unit === 'unrestricted_user') {
+        return 'allocated_count'
+    }
+    if (unit === 'device' || unit === 'unattended_robot') {
+        return 'resource_count'
+    }
+    return 'su_count'
+}
+
+/** Reads whichever of the three headline fields `valueField()` picked out. */
+function consumptionValue(row: CategoryRow, field: string): number {
+    if (field === 'su_count') {
+        return row.su_count
+    }
+    if (field === 'resource_count') {
+        return row.resource_count
+    }
+    return row.allocated_count
 }
 
 function toInt(value: string | null): number {
@@ -296,7 +343,7 @@ export function getSuites(request: any, response: any): void {
         const field = valueField(unit)
         for (let i = 0; i < categories.length; i++) {
             const row = categories[i]
-            consumption += field === 'su_count' ? row.su_count : row.allocated_count
+            consumption += consumptionValue(row, field)
             allocated += row.allocated_count
             active365 += row.active_365_count
             if (row.source_job_status && !jobStatus) {

@@ -493,19 +493,31 @@ LicenseUsageCollector.prototype = {
         }
     },
 
+    /**
+     * Field that carries a suite's headline number, given its unit of measure.
+     * Fulfiller/user-style units come from role-based or unrestricted counting;
+     * everything else is native-counts, and is either a raw resource count
+     * (Device, Unattended Robot) or already-computed subscription units
+     * (Subscription Unit, Assist).
+     */
+    _consumptionField: function (unit) {
+        if (unit === 'fulfiller_user' || unit === 'user' || unit === 'unrestricted_user') {
+            return 'allocated_count'
+        }
+        if (unit === 'device' || unit === 'unattended_robot') {
+            return 'resource_count'
+        }
+        return 'su_count'
+    },
+
     _sumRows: function (rows, unit) {
+        var field = this._consumptionField(unit)
         var total = 0
         for (var i = 0; i < rows.length; i++) {
             if (rows[i].is_detail) {
                 continue // per-role detail overlaps with the totals above; not part of the sum
             }
-            if (unit === 'subscription_unit') {
-                total += rows[i].su_count || 0
-            } else if (rows[i].allocated_count != null) {
-                total += rows[i].allocated_count
-            } else {
-                total += rows[i].resource_count || 0
-            }
+            total += rows[i][field] || 0
         }
         return total
     },
@@ -546,7 +558,7 @@ LicenseUsageCollector.prototype = {
             return 0
         }
 
-        var field = metric === 'consumption' ? (unit === 'subscription_unit' ? 'su_count' : 'allocated_count') : metric
+        var field = metric === 'consumption' ? this._consumptionField(unit) : metric
 
         var agg = new GlideAggregate(this.SNAPSHOT)
         agg.addQuery('suite', suiteId)
