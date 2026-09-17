@@ -108,3 +108,24 @@ Record({
         order: 600,
     },
 })
+
+/**
+ * Points straight at the two theme colour properties (see properties.now.ts)
+ * filtered to just those two rows, so changing the brand is a couple of
+ * clicks from the application menu instead of hunting through sys_properties.
+ */
+Record({
+    $id: Now.ID['module-appearance'],
+    table: 'sys_app_module',
+    data: {
+        title: 'Appearance',
+        application: licAllocMenu,
+        link_type: 'LIST',
+        name: 'sys_properties',
+        query: 'nameINx_snc_lic_alloc.theme.primary,x_snc_lic_alloc.theme.accent',
+        hint: 'Header background and accent colour for this dashboard',
+        roles: MENU_ROLES,
+        active: true,
+        order: 700,
+    },
+})

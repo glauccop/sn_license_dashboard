@@ -65,14 +65,14 @@ Duas roles vêm com a aplicação (`x_snc_lic_alloc.admin`, `x_snc_lic_alloc.vie
 
 ## Aparência
 
-As cores são configuração da própria aplicação, não do tema Next Experience da instância — uma aplicação genérica e compartilhável não deveria assumir por padrão a marca de um cliente específico. Duas propriedades de sistema controlam isso:
+As cores são configuração da própria aplicação, não do tema Next Experience da instância. Duas propriedades de sistema controlam isso:
 
 | Propriedade | Finalidade | Padrão |
 |---|---|---|
-| `x_snc_lic_alloc.theme.primary` | Fundo do cabeçalho | `#1f2933` |
-| `x_snc_lic_alloc.theme.accent` | Gráficos e destaques | `#3d68c4` |
+| `x_snc_lic_alloc.theme.primary` | Fundo do cabeçalho | `#0070AF` |
+| `x_snc_lic_alloc.theme.accent` | Gráficos e destaques | `#F58220` |
 
-Ajuste-as por instância para combinar com a marca do cliente. O logo continua seguindo o `glide.product.image` da própria instância.
+Abra **License Allocation → Appearance** para editar qualquer uma das duas diretamente — esse módulo já vem filtrado para mostrar só essas duas linhas. Como usam `installMethod: 'once'`, um valor alterado aqui sobrevive a cada atualização futura via `now-sdk install`, em vez de voltar para o padrão de fábrica. O logo continua seguindo o `glide.product.image` da própria instância.
 
 ## Idioma
 
@@ -89,7 +89,7 @@ Adicionar outro idioma significa estender `Lang`/`STRINGS` em `src/client/i18n.t
 ## Instalação
 
 1. Instale a aplicação.
-2. Configure `x_snc_lic_alloc.theme.primary` e `x_snc_lic_alloc.theme.accent` se quiser que o painel siga a marca de um cliente específico.
+2. Abra **License Allocation → Appearance** se quiser trocar as cores de cabeçalho/destaque em relação ao padrão de fábrica.
 3. Abra **License Allocation → Product Collection** e ative as suítes que deseja coletar.
 4. Abra **License Allocation → Entitlements** e cadastre suas quantidades contratadas.
 5. Execute **License Allocation - Daily Collection** manualmente uma vez, em vez de esperar a execução noturna, para confirmar que está funcionando.
@@ -111,6 +111,7 @@ A tabela de uso do Now Assist (`sn_entitlement_genai_assist_analytics`) é prote
 | **Role to Suite Mapping** | Quais roles consomem qual suíte |
 | **Entitlements** | Suas quantidades contratadas |
 | **Daily Snapshots** | As linhas brutas coletadas, para auditar qualquer número do painel |
+| **Appearance** | Link direto para as duas properties de cor do tema |
 
 ## Comportamento do painel
 

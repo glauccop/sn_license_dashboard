@@ -129,6 +129,10 @@ declare global {
                         table: 'sys_app_application'
                         id: 'bacda7d733474bbd9125c35a348a4fa2'
                     }
+                    'module-appearance': {
+                        table: 'sys_app_module'
+                        id: '6a685f3219e1403c87d2329ced499283'
+                    }
                     'module-dashboard': {
                         table: 'sys_app_module'
                         id: '316829f7d5fb4372a7b8ffd27f219ef8'

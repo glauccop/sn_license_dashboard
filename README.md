@@ -65,14 +65,14 @@ Two roles ship with the app (`x_snc_lic_alloc.admin`, `x_snc_lic_alloc.viewer`) 
 
 ## Appearance
 
-Colours are the app's own configuration, not the instance's Next Experience theme — a generic, shareable app should not default to any one customer's brand. Two system properties control it:
+Colours are the app's own configuration, not the instance's Next Experience theme. Two system properties control it:
 
 | Property | Purpose | Default |
 |---|---|---|
-| `x_snc_lic_alloc.theme.primary` | Header background | `#1f2933` |
-| `x_snc_lic_alloc.theme.accent` | Charts and highlights | `#3d68c4` |
+| `x_snc_lic_alloc.theme.primary` | Header background | `#0070AF` |
+| `x_snc_lic_alloc.theme.accent` | Charts and highlights | `#F58220` |
 
-Set these per instance to match the customer's brand. The logo still follows the instance's own `glide.product.image`.
+Open **License Allocation → Appearance** to edit either property directly — that module is filtered to just these two rows. `installMethod: 'once'` means a value changed here survives every later `now-sdk install` upgrade instead of being reset back to the shipped default. The logo still follows the instance's own `glide.product.image`.
 
 ## Language
 
@@ -89,7 +89,7 @@ Adding another language means extending `Lang`/`STRINGS` in `src/client/i18n.ts`
 ## Installation
 
 1. Install the application.
-2. Set `x_snc_lic_alloc.theme.primary` and `x_snc_lic_alloc.theme.accent` if you want the dashboard to match a specific brand.
+2. Open **License Allocation → Appearance** if you want to change the header/accent colours away from the shipped default.
 3. Open **License Allocation → Product Collection** and enable the suites you want collected.
 4. Open **License Allocation → Entitlements** and enter your contracted quantities.
 5. Run **License Allocation - Daily Collection** once manually, rather than waiting for the overnight run, to confirm it works.
@@ -111,6 +111,7 @@ Now Assist's usage table (`sn_entitlement_genai_assist_analytics`) is more tight
 | **Role to Suite Mapping** | Which roles consume which suite |
 | **Entitlements** | Your contracted quantities |
 | **Daily Snapshots** | The raw collected rows, for auditing any number on the dashboard |
+| **Appearance** | Direct link to the two theme colour properties |
 
 ## Dashboard behaviour
 
